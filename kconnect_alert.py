@@ -183,6 +183,7 @@ def alert_slack(connector_name=None, connector_state=None, connector_type=None, 
         log.exception(f"Error: {e}")
 
 
+
 if __name__ == '__main__':
     log = get_logger("__main__")
 
@@ -219,8 +220,10 @@ if __name__ == '__main__':
                     log.info('Task ' + task_id + ': ' + task_state)
                     if task['state'] == 'FAILED':
                         message = f'Alert! - connector {connector_name} has failed task({task_id}). Restarting!'
-                        response = http_util.post(
-                            BASE_PATH + '/' + connector + '/tasks/' + str(task['id']) + '/restart')
+                        response = http_util.post(BASE_PATH + '/' + connector_name + '/tasks/' + task_id + '/restart')
+                        log.info(f"{response}")
+                        time.sleep(5)
+                        response = http_util.get(BASE_PATH + '/' + connector_name + '/tasks/' + task_id + '/status')
                         log.info(f"{response}")
                         alert_slack(connector_name=connector_name, connector_state=connector_state,
                                     connector_type=connector_type, worker_id=worker_id, task_id=task_id,
