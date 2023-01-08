@@ -1,5 +1,5 @@
 # About Kafka
-Apache Kafka is a community distributed event streaming platform capable of handling trillions of events a day. Initially conceived as a messaging queue, Kafka is based on an abstraction of a distributed commit log. Since being created and open-sourced by LinkedIn in 2011, Kafka has quickly evolved from messaging queue to a full-fledged event streaming platform.
+Apache Kafka is a community distributed event streaming platform capable of handling trillions of events a day. Initially conceived as a messaging queue, Kafka is based on an abstraction of a distributed commit log. Since being created and open-sourced by LinkedIn in 2011, Kafka has quickly evolved from messaging queue to a full-fledged event streaming platform. Kafka stores data up to a configurable time interval per data entity of kafka topic.
 
 Core components of Kafka Streaming Ecosystems are 
 1. Kafka Cluster (Distributed)
@@ -9,7 +9,22 @@ Core components of Kafka Streaming Ecosystems are
 
 # Kafka Connect 
 
+Kafka Connect is a component of Apache Kafka® that’s used to perform streaming integration between Kafka and other systems such as databases, cloud services, search indexes, file systems, and key-value stores.
+
 ![image](https://user-images.githubusercontent.com/3804538/211216875-2f1cbf7d-57c1-436f-b631-6d7f48995fd2.png)
+
+
+If you’re new to Kafka, you may want to take a look at the Apache Kafka 101 course before you get started with this course.
+
+Kafka Connect makes it easy to stream data from numerous sources into Kafka, and stream data out of Kafka to numerous targets. 
+
+The diagram you see here shows a small sample of these sources and sinks (targets). There are literally hundreds of different connectors available for Kafka Connect. Some of the most popular ones include:
+
+* RDBMS (Oracle, SQL Server, Db2, Postgres, MySQL)
+* Cloud object stores (Amazon S3, Azure Blob Storage, Google Cloud Storage)
+* Message queues (ActiveMQ, IBM MQ, RabbitMQ)
+* NoSQL and document stores (Elasticsearch, MongoDB, Cassandra)
+* Cloud data warehouses (Snowflake, Google BigQuery, Amazon Redshift)
 
 ![image](https://user-images.githubusercontent.com/3804538/211218683-3a1fecec-b5a6-43a6-96b5-3a028d7870b5.png)
 
