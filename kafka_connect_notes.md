@@ -1,6 +1,12 @@
+# About Kafka
+Apache Kafka is a community distributed event streaming platform capable of handling trillions of events a day. Initially conceived as a messaging queue, Kafka is based on an abstraction of a distributed commit log. Since being created and open-sourced by LinkedIn in 2011, Kafka has quickly evolved from messaging queue to a full-fledged event streaming platform.
+
 # Kafka Connect 
+
 ![image](https://user-images.githubusercontent.com/3804538/211216875-2f1cbf7d-57c1-436f-b631-6d7f48995fd2.png)
 
+
+REST API - [https://docs.confluent.io/platform/current/connect/references/restapi.html#topics](https://docs.confluent.io/platform/current/connect/references/restapi.html#topics)
 
 ### Ansible to monitor and restart Kafka Connect (one time process)
 Stackoverflow - [https://stackoverflow.com/questions/72545501/ansible-loop-based-on-fact-to-restart-kafka-connector-failed-tasks](https://stackoverflow.com/questions/72545501/ansible-loop-based-on-fact-to-restart-kafka-connector-failed-tasks)
