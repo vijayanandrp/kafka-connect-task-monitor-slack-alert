@@ -7,6 +7,9 @@ Core components of Kafka Streaming Ecosystems are
 3. kSQL DB
 4. Schema Registry 
 
+![image](https://user-images.githubusercontent.com/3804538/211220554-577a24b7-dd10-45b7-a737-80ed8836b7ad.png)
+
+
 # Kafka Connect 
 
 Kafka Connect is a component of Apache Kafka® that’s used to perform streaming integration between Kafka and other systems such as databases, cloud services, search indexes, file systems, and key-value stores.
