@@ -1,9 +1,17 @@
 # About Kafka
 Apache Kafka is a community distributed event streaming platform capable of handling trillions of events a day. Initially conceived as a messaging queue, Kafka is based on an abstraction of a distributed commit log. Since being created and open-sourced by LinkedIn in 2011, Kafka has quickly evolved from messaging queue to a full-fledged event streaming platform.
 
+Core components of Kafka Streaming Ecosystems are 
+1. Kafka
+2. Kafka Connect
+3. kSQL DB
+4. Schema Registry 
+
 # Kafka Connect 
 
 ![image](https://user-images.githubusercontent.com/3804538/211216875-2f1cbf7d-57c1-436f-b631-6d7f48995fd2.png)
+
+![image](https://user-images.githubusercontent.com/3804538/211218683-3a1fecec-b5a6-43a6-96b5-3a028d7870b5.png)
 
 
 REST API - [https://docs.confluent.io/platform/current/connect/references/restapi.html#topics](https://docs.confluent.io/platform/current/connect/references/restapi.html#topics)
