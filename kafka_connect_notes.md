@@ -2,8 +2,8 @@
 Apache Kafka is a community distributed event streaming platform capable of handling trillions of events a day. Initially conceived as a messaging queue, Kafka is based on an abstraction of a distributed commit log. Since being created and open-sourced by LinkedIn in 2011, Kafka has quickly evolved from messaging queue to a full-fledged event streaming platform.
 
 Core components of Kafka Streaming Ecosystems are 
-1. Kafka
-2. Kafka Connect
+1. Kafka Cluster (Distributed)
+2. Kafka Connect (Distributed, Scalable and Fault tolerant same as Kafka)
 3. kSQL DB
 4. Schema Registry 
 
