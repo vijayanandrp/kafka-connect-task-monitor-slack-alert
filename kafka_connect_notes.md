@@ -1,4 +1,44 @@
-### Automatically restarting failed Kafka Connect tasks
+### Ansible to monitor and restart Kafka Connect (one time process)
+Stackoverflow - (https://stackoverflow.com/questions/72545501/ansible-loop-based-on-fact-to-restart-kafka-connector-failed-tasks)[https://stackoverflow.com/questions/72545501/ansible-loop-based-on-fact-to-restart-kafka-connector-failed-tasks]
+
+```ansible
+tasks:
+    - name: Gethering Connector Names
+      uri:
+        url: "{{scheme }}://{{ server }}:{{ port_no }}/connectors"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        method: GET
+        force_basic_auth: yes
+        status_code: 200
+      register: conn_stat
+    - name: Checking for Connector status
+      uri:
+        url: "{{scheme }}://{{ server }}:{{ port_no }}/connectors/{{ abc_conn_name }}/status"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        method: GET
+        force_basic_auth: yes
+      loop: "{{ conn_name }}"
+      loop_control:
+        loop_var: abc_conn_name
+      vars:
+        conn_name: "{{ conn_stat.json }}"
+      register: conn_stat_1
+    - name: Restart Connector Failed tasks
+      vars:
+        failed_connector_name_task_id: "{{ conn_stat_1 | json_query('results[].json[].{name: name ,id: [tasks[?state == `RUNNING`].id [] | [0] ]}') }}"
+      uri:
+        url: "{{scheme }}://{{ server }}:{{ port_no }}/connectors/{{ item.0.name }}/tasks/{{ item.1 }}/restart"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        method: POST
+        force_basic_auth: yes
+        status_code: 200
+      loop: "{{ failed_connector_name_task_id | subelements('id', skip_missing=True) }}"
+```
+
+### Automatically restarting failed Kafka Connect tasks with REST API (Curl, Bash script) 
 
 Here’s a hacky way to automatically restart Kafka Connect connectors if they fail. 
 Restarting automatically only makes sense if it’s a _transient failure_; if there’s a problem with your pipeline 
