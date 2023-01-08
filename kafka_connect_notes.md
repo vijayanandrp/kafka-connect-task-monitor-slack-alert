@@ -1,3 +1,7 @@
+# Kafka Connect 
+![image](https://user-images.githubusercontent.com/3804538/211216875-2f1cbf7d-57c1-436f-b631-6d7f48995fd2.png)
+
+
 ### Ansible to monitor and restart Kafka Connect (one time process)
 Stackoverflow - [https://stackoverflow.com/questions/72545501/ansible-loop-based-on-fact-to-restart-kafka-connector-failed-tasks](https://stackoverflow.com/questions/72545501/ansible-loop-based-on-fact-to-restart-kafka-connector-failed-tasks)
 
