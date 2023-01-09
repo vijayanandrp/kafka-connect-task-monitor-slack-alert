@@ -14,6 +14,8 @@ There are two core pieces in this diagram:
 1.  **Prometheus server:** This component is responsible for polling all of the processes/clients with their metrics exposed on a specific port. The Prometheus server internally maintains a configuration file that lists all the server IP addresses/hostnames and ports on which Prometheus metrics are exposed. The scrape target configuration is the file that keeps all target mapping within Prometheus. Scrape targets are required when we are deploying everything manually without any automation. Prometheus also supports service discovery modules, which it can leverage to discover any available services that are exposing metrics. This auto-discovery is an amazing tool when used with Kubernetes-based deployments, where Pod names (among other elements) are ephemeral. To keep it simple, [Prometheus service discovery](https://github.com/prometheus/prometheus/tree/main/discovery) won’t be covered in this post.
 2.  **Client processes:** All clients that want to leverage Prometheus will need two configuration pieces. First, they must use the Prometheus client library to expose metrics in a Prometheus compatible format (OpenMetrics). Secondly, they must use a YAML configuration file for extracting JMX metrics. This configuration file is used for converting, renaming, and filtering some of the attributes for consumption. The YAML configuration file is necessary for the JVM client, as the JVM MBeans are exposed, converted, and/or renamed to a specific format for consumption using this configuration file.
 
+JMX exporter JAR file: This file is responsible for exposing all of the JVM metrics in a Prometheus-compatible format. The JAR file should be copied on all of the servers where Prometheus clients reside, and it will be activated using the Java agent switch on the command line for all components.
+
 https://www.confluent.io/blog/monitor-kafka-clusters-with-prometheus-grafana-and-confluent/
 
 # What is the Prometheus Node Exporter? 
@@ -27,6 +29,7 @@ The statistics which are detailed in the table below are used to monitor system 
 
 
 # Using JMX exporter to expose JMX metrics
+
 Java Management Extensions (JMX) is a technology that provides the tools for providing monitoring within applications built on JVM. 
 
 Since Kafka is written in Java, it extensively uses JMX technology to expose its internal metrics over the JMX platform.
@@ -72,3 +75,5 @@ Loki differs from Prometheus by focusing on logs instead of metrics, and deliver
 
 ![image](https://user-images.githubusercontent.com/3804538/211333287-f74ba25f-04f6-41c6-8e9e-14a9b07b72e5.png)
 
+# References 
+1. https://www.confluent.io/blog/monitor-kafka-clusters-with-prometheus-grafana-and-confluent/
