@@ -10,6 +10,8 @@ i.e. metrics information is stored with the timestamp at which it was recorded, 
 - It is now a standalone open source project and maintained independently of any company. 
 - To emphasize this, and to clarify the project's governance structure, Prometheus joined the Cloud Native Computing Foundation in 2016 as the second hosted project, after Kubernetes.
 
+> Prometheus is an increasingly popular tool in the world of SREs and operational monitoring. Based on ideas from Google’s internal monitoring service (Borgmon), and with native support from services like Docker and Kubernetes, Prometheus is designed for a cloud-based, containerized world. As a result, it’s quite different from existing services like Graphite. 
+
 ## Features
 Prometheus's main features are:
 
