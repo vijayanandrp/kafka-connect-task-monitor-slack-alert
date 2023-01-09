@@ -84,3 +84,6 @@ Now every five minutes the script will look for any FAILED tasks and send a REST
 Soucre = [https://rmoff.net/2019/06/06/automatically-restarting-failed-kafka-connect-tasks/](https://rmoff.net/2019/06/06/automatically-restarting-failed-kafka-connect-tasks/)
 
 https://docs.confluent.io/platform/current/connect/references/restapi.html#post--connectors-(string-name)-tasks-(int-taskid)-restart
+
+https://www.javierholguera.com/tag/kafka-connect/
+
