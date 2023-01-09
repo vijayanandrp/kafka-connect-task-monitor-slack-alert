@@ -1,6 +1,8 @@
 
 REST API - [https://docs.confluent.io/platform/current/connect/references/restapi.html#topics](https://docs.confluent.io/platform/current/connect/references/restapi.html#topics)
 
+https://docs.confluent.io/platform/current/connect/references/restapi.html#post--connectors-(string-name)-tasks-(int-taskid)-restart
+
 ### Ansible to monitor and restart Kafka Connect (one time process)
 Stackoverflow - [https://stackoverflow.com/questions/72545501/ansible-loop-based-on-fact-to-restart-kafka-connector-failed-tasks](https://stackoverflow.com/questions/72545501/ansible-loop-based-on-fact-to-restart-kafka-connector-failed-tasks)
 
@@ -80,3 +82,5 @@ Which as any hacky admin will know can be scheduled to run with a crontab such a
 Now every five minutes the script will look for any FAILED tasks and send a REST call to restart them.
 
 Soucre = [https://rmoff.net/2019/06/06/automatically-restarting-failed-kafka-connect-tasks/](https://rmoff.net/2019/06/06/automatically-restarting-failed-kafka-connect-tasks/)
+
+https://docs.confluent.io/platform/current/connect/references/restapi.html#post--connectors-(string-name)-tasks-(int-taskid)-restart
