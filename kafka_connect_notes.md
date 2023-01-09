@@ -106,6 +106,25 @@ Renaming fields
 
 For more complex transformations, including aggregations and joins to other topics or lookups to other systems, a full stream processing layer in ksqlDB or Kafka Streams is recommended.
 
+Kafka Connect runs under the Java virtual machine (JVM) as a process known as a worker. Each worker can execute multiple connectors. When you look to see if Kafka Connect is running, or want to look at its log file, it's the worker process that you're looking at. Tasks are executed by Kafka Connect workers.
+
+
+A Kafka Connect worker can be run in one of two deployment modes: standalone or distributed. The way in which you configure and operate Kafka Connect in these two modes is different and each has its pros and cons.
+
+Despite its name, the distributed deployment mode is equally valid for a single worker deployed in a sandbox or development environment. In this mode, Kafka Connect uses Kafka topics to store state pertaining to connector configuration, connector status, and more. The topics are configured to retain this information indefinitely, known as compacted topics. Connector instances are created and managed via the REST API that Kafka Connect offers.
+
+The distributed mode is the recommended best practice for most use cases.
+
+![image](https://user-images.githubusercontent.com/3804538/211229272-bdcecd4b-d914-412f-ab2f-3b272725e089.png)
+
+Since all offsets, configs, and status information for the distributed mode cluster is maintained in Kafka topics, this means that you can add additional workers easily, as they can read everything that they need from Kafka. When you add workers from a Kafka Connect cluster, the tasks are rebalanced across the available workers to distribute the workload. If you decide to scale down your cluster (or even if something outside your control happens and a worker crashes), Kafka Connect will rebalance again to ensure that all the connector tasks are still executed.
+
+![image](https://user-images.githubusercontent.com/3804538/211229315-db58d86c-45f0-4e64-96ce-4036d4f2787f.png)
+
+![image](https://user-images.githubusercontent.com/3804538/211229330-5fd6d9ba-da13-48f8-9fbc-5cef91605424.png)
+
+The minimum number of workers recommended is two so that you have fault tolerance. But of course, you can add additional workers to the cluster as your throughput needs increase. You can opt to have fewer, bigger clusters of workers, or you may choose to deploy a greater number of smaller clusters in order to physically isolate workloads. Both are valid approaches and are usually dictated by organizational structure and responsibility for the respective pipelines implemented in Kafka Connect.
+
 REST API - [https://docs.confluent.io/platform/current/connect/references/restapi.html#topics](https://docs.confluent.io/platform/current/connect/references/restapi.html#topics)
 
 ### Ansible to monitor and restart Kafka Connect (one time process)
