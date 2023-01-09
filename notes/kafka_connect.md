@@ -4,12 +4,12 @@ Kafka Connect is a tool for scalably and reliably streaming data between Apache 
 
 Kafka Connect features include:
 
-*   **A common framework for Kafka connectors** - Kafka Connect standardizes integration of other data systems with Kafka, simplifying connector development, deployment, and management
-*   **Distributed and standalone modes** - scale up to a large, centrally managed service supporting an entire organization or scale down to development, testing, and small production deployments
-*   **REST interface** - submit and manage connectors to your Kafka Connect cluster via an easy to use REST API
-*   **Automatic offset management** - with just a little information from connectors, Kafka Connect can manage the offset commit process automatically so connector developers do not need to worry about this error prone part of connector development
-*   **Distributed and scalable by default** - Kafka Connect builds on the existing group management protocol. More workers can be added to scale up a Kafka Connect cluster.
-*   **Streaming/batch integration** - leveraging Kafka's existing capabilities, Kafka Connect is an ideal solution for bridging streaming and batch data systems
+* **A common framework for Kafka connectors** \- Kafka Connect standardizes integration of other data systems with Kafka, simplifying connector development, deployment, and management
+* **Distributed and standalone modes** \- scale up to a large, centrally managed service supporting an entire organization or scale down to development, testing, and small production deployments
+* **REST interface** \- submit and manage connectors to your Kafka Connect cluster via an easy to use REST API
+* **Automatic offset management** \- with just a little information from connectors, Kafka Connect can manage the offset commit process automatically so connector developers do not need to worry about this error prone part of connector development
+* **Distributed and scalable by default** \- Kafka Connect builds on the existing group management protocol. More workers can be added to scale up a Kafka Connect cluster.
+* **Streaming/batch integration** \- leveraging Kafka's existing capabilities, Kafka Connect is an ideal solution for bridging streaming and batch data systems
 
 ### [8.2 User Guide](#connect_user)
 
@@ -25,14 +25,14 @@ In standalone mode all work is performed in a single process. This configuration
 
 The first parameter is the configuration for the worker. This includes settings such as the Kafka connection parameters, serialization format, and how frequently to commit offsets. The provided example should work well with a local cluster running with the default configuration provided by `config/server.properties`. It will require tweaking to use with a different configuration or production deployment. All workers (both standalone and distributed) require a few configs:
 
-*   `bootstrap.servers` - List of Kafka servers used to bootstrap connections to Kafka
-*   `key.converter` - Converter class used to convert between Kafka Connect format and the serialized form that is written to Kafka. This controls the format of the keys in messages written to or read from Kafka, and since this is independent of connectors it allows any connector to work with any serialization format. Examples of common formats include JSON and Avro.
-*   `value.converter` - Converter class used to convert between Kafka Connect format and the serialized form that is written to Kafka. This controls the format of the values in messages written to or read from Kafka, and since this is independent of connectors it allows any connector to work with any serialization format. Examples of common formats include JSON and Avro.
-*   `plugin.path` (default `empty`) - a list of paths that contain Connect plugins (connectors, converters, transformations). Before running quick starts, users must add the absolute path that contains the example FileStreamSourceConnector and FileStreamSinkConnector packaged in `connect-file-"version".jar`, because these connectors are not included by default to the `CLASSPATH` or the `plugin.path` of the Connect worker (see [plugin.path](#connectconfigs_plugin.path) property for examples).
+* `bootstrap.servers` \- List of Kafka servers used to bootstrap connections to Kafka
+* `key.converter` \- Converter class used to convert between Kafka Connect format and the serialized form that is written to Kafka. This controls the format of the keys in messages written to or read from Kafka, and since this is independent of connectors it allows any connector to work with any serialization format. Examples of common formats include JSON and Avro.
+* `value.converter` \- Converter class used to convert between Kafka Connect format and the serialized form that is written to Kafka. This controls the format of the values in messages written to or read from Kafka, and since this is independent of connectors it allows any connector to work with any serialization format. Examples of common formats include JSON and Avro.
+* `plugin.path` (default `empty`) \- a list of paths that contain Connect plugins (connectors, converters, transformations). Before running quick starts, users must add the absolute path that contains the example FileStreamSourceConnector and FileStreamSinkConnector packaged in `connect-file-"version".jar`, because these connectors are not included by default to the `CLASSPATH` or the `plugin.path` of the Connect worker (see [plugin.path](#connectconfigs_plugin.path) property for examples).
 
 The important configuration options specific to standalone mode are:
 
-*   `offset.storage.file.filename` - File to store offset data in
+* `offset.storage.file.filename` \- File to store offset data in
 
 The parameters that are configured here are intended for producers and consumers used by Kafka Connect to access the configuration, offset and status topics. For configuration of the producers used by Kafka source tasks and the consumers used by Kafka sink tasks, the same parameters can be used but need to be prefixed with `producer.` and `consumer.` respectively. The only Kafka client parameter that is inherited without a prefix from the worker configuration is `bootstrap.servers`, which in most cases will be sufficient, since the same cluster is often used for all purposes. A notable exception is a secured cluster, which requires extra parameters to allow connections. These parameters will need to be set up to three times in the worker configuration, once for management access, once for Kafka sources and once for Kafka sinks.
 
@@ -48,10 +48,10 @@ The difference is in the class which is started and the configuration parameters
 
 In particular, the following configuration parameters, in addition to the common settings mentioned above, are critical to set before starting your cluster:
 
-*   `group.id` (default `connect-cluster`) - unique name for the cluster, used in forming the Connect cluster group; note that this **must not conflict** with consumer group IDs
-*   `config.storage.topic` (default `connect-configs`) - topic to use for storing connector and task configurations; note that this should be a single partition, highly replicated, compacted topic. You may need to manually create the topic to ensure the correct configuration as auto created topics may have multiple partitions or be automatically configured for deletion rather than compaction
-*   `offset.storage.topic` (default `connect-offsets`) - topic to use for storing offsets; this topic should have many partitions, be replicated, and be configured for compaction
-*   `status.storage.topic` (default `connect-status`) - topic to use for storing statuses; this topic can have multiple partitions, and should be replicated and configured for compaction
+* `group.id` (default `connect-cluster`) \- unique name for the cluster, used in forming the Connect cluster group; note that this **must not conflict** with consumer group IDs
+* `config.storage.topic` (default `connect-configs`) \- topic to use for storing connector and task configurations; note that this should be a single partition, highly replicated, compacted topic. You may need to manually create the topic to ensure the correct configuration as auto created topics may have multiple partitions or be automatically configured for deletion rather than compaction
+* `offset.storage.topic` (default `connect-offsets`) \- topic to use for storing offsets; this topic should have many partitions, be replicated, and be configured for compaction
+* `status.storage.topic` (default `connect-status`) \- topic to use for storing statuses; this topic can have multiple partitions, and should be replicated and configured for compaction
 
 Note that in distributed mode the connector configurations are not passed on the command line. Instead, use the REST API described below to create, modify, and destroy connectors.
 
@@ -61,18 +61,18 @@ Connector configurations are simple key-value mappings. For standalone mode thes
 
 Most configurations are connector dependent, so they can't be outlined here. However, there are a few common options:
 
-*   `name` - Unique name for the connector. Attempting to register again with the same name will fail.
-*   `connector.class` - The Java class for the connector
-*   `tasks.max` - The maximum number of tasks that should be created for this connector. The connector may create fewer tasks if it cannot achieve this level of parallelism.
-*   `key.converter` - (optional) Override the default key converter set by the worker.
-*   `value.converter` - (optional) Override the default value converter set by the worker.
+* `name` \- Unique name for the connector. Attempting to register again with the same name will fail.
+* `connector.class` \- The Java class for the connector
+* `tasks.max` \- The maximum number of tasks that should be created for this connector. The connector may create fewer tasks if it cannot achieve this level of parallelism.
+* `key.converter` \- (optional) Override the default key converter set by the worker.
+* `value.converter` \- (optional) Override the default value converter set by the worker.
 
 The `connector.class` config supports several formats: the full name or alias of the class for this connector. If the connector is org.apache.kafka.connect.file.FileStreamSinkConnector, you can either specify this full name or use FileStreamSink or FileStreamSinkConnector to make the configuration a bit shorter.
 
 Sink connectors also have a few additional options to control their input. Each sink connector must set one of the following:
 
-*   `topics` - A comma-separated list of topics to use as input for this connector
-*   `topics.regex` - A Java regular expression of topics to use as input for this connector
+* `topics` \- A comma-separated list of topics to use as input for this connector
+* `topics.regex` \- A Java regular expression of topics to use as input for this connector
 
 For any other options, you should consult the documentation for the connector.
 
@@ -82,9 +82,9 @@ Connectors can be configured with transformations to make lightweight message-at
 
 A transformation chain can be specified in the connector configuration.
 
-*   `transforms` - List of aliases for the transformation, specifying the order in which the transformations will be applied.
-*   `transforms.$alias.type` - Fully qualified class name for the transformation.
-*   `transforms.$alias.$transformationSpecificConfig` Configuration properties for the transformation
+* `transforms` \- List of aliases for the transformation, specifying the order in which the transformations will be applied.
+* `transforms.$alias.type` \- Fully qualified class name for the transformation.
+* `transforms.$alias.$transformationSpecificConfig` Configuration properties for the transformation
 
 For example, lets take the built-in file source connector and use a transformation to add a static field.
 
@@ -95,8 +95,8 @@ value.converter.schemas.enable
 
 The file source connector reads each line as a String. We will wrap each line in a Map and then add a second field to identify the origin of the event. To do this, we use two transformations:
 
-*   **HoistField** to place the input line inside a Map
-*   **InsertField** to add the static field. In this example we'll indicate that the record came from a file connector
+* **HoistField** to place the input line inside a Map
+* **InsertField** to add the static field. In this example we'll indicate that the record came from a file connector
 
 After adding the transformations, `connect-file-source.properties` file looks as following:
 
@@ -109,7 +109,7 @@ transforms=MakeMap, InsertSource
 transforms.MakeMap.type=org.apache.kafka.connect.transforms.HoistField$Value
 transforms.MakeMap.field=line
 transforms.InsertSource.type=org.apache.kafka.connect.transforms.InsertField$Value
-transforms.InsertSource.static.field=data\_source
+transforms.InsertSource.static.field=data_source
 transforms.InsertSource.static.value=test-file-source
 
 All the lines starting with `transforms` were added for the transformations. You can see the two transformations we created: "InsertSource" and "MakeMap" are aliases that we chose to give the transformations. The transformation types are based on the list of built-in transformations you can see below. Each transformation type has additional configuration: HoistField requires a configuration called "field", which is the name of the field in the map that will include the original String from the file. InsertField transformation lets us specify the field name and the value that we are adding.
@@ -122,9 +122,9 @@ When we ran the file source connector on my sample file without the transformati
 
 We then create a new file connector, this time after adding the transformations to the configuration file. This time, the results will be:
 
-{"line":"foo","data\_source":"test-file-source"}
-{"line":"bar","data\_source":"test-file-source"}
-{"line":"hello world","data\_source":"test-file-source"}
+{"line":"foo","data_source":"test-file-source"}
+{"line":"bar","data_source":"test-file-source"}
+{"line":"hello world","data_source":"test-file-source"}
 
 You can see that the lines we've read are now part of a JSON map, and there is an extra field with the static value we specified. This is just one example of what you can do with transformations.
 
@@ -132,19 +132,19 @@ You can see that the lines we've read are now part of a JSON map, and there is a
 
 Several widely-applicable data and routing transformations are included with Kafka Connect:
 
-*   InsertField - Add a field using either static data or record metadata
-*   ReplaceField - Filter or rename fields
-*   MaskField - Replace field with valid null value for the type (0, empty string, etc) or custom replacement (non-empty string or numeric value only)
-*   ValueToKey - Replace the record key with a new key formed from a subset of fields in the record value
-*   HoistField - Wrap the entire event as a single field inside a Struct or a Map
-*   ExtractField - Extract a specific field from Struct and Map and include only this field in results
-*   SetSchemaMetadata - modify the schema name or version
-*   TimestampRouter - Modify the topic of a record based on original topic and timestamp. Useful when using a sink that needs to write to different tables or indexes based on timestamps
-*   RegexRouter - modify the topic of a record based on original topic, replacement string and a regular expression
-*   Filter - Removes messages from all further processing. This is used with a [predicate](#connect_predicates) to selectively filter certain messages.
-*   InsertHeader - Add a header using static data
-*   HeadersFrom - Copy or move fields in the key or value to the record headers
-*   DropHeaders - Remove headers by name
+* InsertField - Add a field using either static data or record metadata
+* ReplaceField - Filter or rename fields
+* MaskField - Replace field with valid null value for the type (0, empty string, etc) or custom replacement (non-empty string or numeric value only)
+* ValueToKey - Replace the record key with a new key formed from a subset of fields in the record value
+* HoistField - Wrap the entire event as a single field inside a Struct or a Map
+* ExtractField - Extract a specific field from Struct and Map and include only this field in results
+* SetSchemaMetadata - modify the schema name or version
+* TimestampRouter - Modify the topic of a record based on original topic and timestamp. Useful when using a sink that needs to write to different tables or indexes based on timestamps
+* RegexRouter - modify the topic of a record based on original topic, replacement string and a regular expression
+* Filter - Removes messages from all further processing. This is used with a [predicate](#connect_predicates) to selectively filter certain messages.
+* InsertHeader - Add a header using static data
+* HeadersFrom - Copy or move fields in the key or value to the record headers
+* DropHeaders - Remove headers by name
 
 Details on how to configure each transformation are listed below:
 
@@ -154,114 +154,72 @@ Insert field(s) using attributes from the record metadata or a configured static
 
 Use the concrete transformation type designed for the record key (`org.apache.kafka.connect.transforms.InsertField$Key`) or value (`org.apache.kafka.connect.transforms.InsertField$Value`).
 
-*   ###### [offset.field](#org.apache.kafka.connect.transforms.InsertField_offset.field)
+* ###### [offset.field](#org.apache.kafka.connect.transforms.InsertField_offset.field)
     
     Field name for Kafka offset - only applicable to sink connectors.  
     Suffix with `!` to make this a required field, or `?` to keep it optional (the default).
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | null |
+    | Valid Values: |     |
+    | Importance: | medium |
     
-    string
-    
-    Default:
-    
-    null
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
-    
-*   ###### [partition.field](#org.apache.kafka.connect.transforms.InsertField_partition.field)
+* ###### [partition.field](#org.apache.kafka.connect.transforms.InsertField_partition.field)
     
     Field name for Kafka partition. Suffix with `!` to make this a required field, or `?` to keep it optional (the default).
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | null |
+    | Valid Values: |     |
+    | Importance: | medium |
     
-    string
-    
-    Default:
-    
-    null
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
-    
-*   ###### [static.field](#org.apache.kafka.connect.transforms.InsertField_static.field)
+* ###### [static.field](#org.apache.kafka.connect.transforms.InsertField_static.field)
     
     Field name for static data field. Suffix with `!` to make this a required field, or `?` to keep it optional (the default).
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | null |
+    | Valid Values: |     |
+    | Importance: | medium |
     
-    string
-    
-    Default:
-    
-    null
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
-    
-*   ###### [static.value](#org.apache.kafka.connect.transforms.InsertField_static.value)
+* ###### [static.value](#org.apache.kafka.connect.transforms.InsertField_static.value)
     
     Static field value, if field name configured.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | null |
+    | Valid Values: |     |
+    | Importance: | medium |
     
-    string
-    
-    Default:
-    
-    null
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
-    
-*   ###### [timestamp.field](#org.apache.kafka.connect.transforms.InsertField_timestamp.field)
+* ###### [timestamp.field](#org.apache.kafka.connect.transforms.InsertField_timestamp.field)
     
     Field name for record timestamp. Suffix with `!` to make this a required field, or `?` to keep it optional (the default).
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | null |
+    | Valid Values: |     |
+    | Importance: | medium |
     
-    string
-    
-    Default:
-    
-    null
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
-    
-*   ###### [topic.field](#org.apache.kafka.connect.transforms.InsertField_topic.field)
+* ###### [topic.field](#org.apache.kafka.connect.transforms.InsertField_topic.field)
     
     Field name for Kafka topic. Suffix with `!` to make this a required field, or `?` to keep it optional (the default).
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    null
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | null |
+    | Valid Values: |     |
+    | Importance: | medium |
     
 
 ##### [org.apache.kafka.connect.transforms.ReplaceField](#org.apache.kafka.connect.transforms.ReplaceField)
@@ -270,97 +228,60 @@ Filter or rename fields.
 
 Use the concrete transformation type designed for the record key (`org.apache.kafka.connect.transforms.ReplaceField$Key`) or value (`org.apache.kafka.connect.transforms.ReplaceField$Value`).
 
-*   ###### [exclude](#org.apache.kafka.connect.transforms.ReplaceField_exclude)
+* ###### [exclude](#org.apache.kafka.connect.transforms.ReplaceField_exclude)
     
     Fields to exclude. This takes precedence over the fields to include.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | list |
+    | Default: | ""  |
+    | Valid Values: |     |
+    | Importance: | medium |
     
-    list
-    
-    Default:
-    
-    ""
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
-    
-*   ###### [include](#org.apache.kafka.connect.transforms.ReplaceField_include)
+* ###### [include](#org.apache.kafka.connect.transforms.ReplaceField_include)
     
     Fields to include. If specified, only these fields will be used.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | list |
+    | Default: | ""  |
+    | Valid Values: |     |
+    | Importance: | medium |
     
-    list
-    
-    Default:
-    
-    ""
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
-    
-*   ###### [renames](#org.apache.kafka.connect.transforms.ReplaceField_renames)
+* ###### [renames](#org.apache.kafka.connect.transforms.ReplaceField_renames)
     
     Field rename mappings.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | list |
+    | Default: | ""  |
+    | Valid Values: | list of colon-delimited pairs, e.g. `foo:bar,abc:xyz` |
+    | Importance: | medium |
     
-    list
-    
-    Default:
-    
-    ""
-    
-    Valid Values:
-    
-    list of colon-delimited pairs, e.g. `foo:bar,abc:xyz`
-    
-    Importance:
-    
-    medium
-    
-*   ###### [blacklist](#org.apache.kafka.connect.transforms.ReplaceField_blacklist)
+* ###### [blacklist](#org.apache.kafka.connect.transforms.ReplaceField_blacklist)
     
     Deprecated. Use exclude instead.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | list |
+    | Default: | null |
+    | Valid Values: |     |
+    | Importance: | low |
     
-    list
-    
-    Default:
-    
-    null
-    
-    Valid Values:
-    
-    Importance:
-    
-    low
-    
-*   ###### [whitelist](#org.apache.kafka.connect.transforms.ReplaceField_whitelist)
+* ###### [whitelist](#org.apache.kafka.connect.transforms.ReplaceField_whitelist)
     
     Deprecated. Use include instead.
     
-    Type:
-    
-    list
-    
-    Default:
-    
-    null
-    
-    Valid Values:
-    
-    Importance:
-    
-    low
+    |     |     |
+    | --- | --- |
+    | Type: | list |
+    | Default: | null |
+    | Valid Values: |     |
+    | Importance: | low |
     
 
 ##### [org.apache.kafka.connect.transforms.MaskField](#org.apache.kafka.connect.transforms.MaskField)
@@ -371,66 +292,43 @@ For numeric and string fields, an optional replacement value can be specified th
 
 Use the concrete transformation type designed for the record key (`org.apache.kafka.connect.transforms.MaskField$Key`) or value (`org.apache.kafka.connect.transforms.MaskField$Value`).
 
-*   ###### [fields](#org.apache.kafka.connect.transforms.MaskField_fields)
+* ###### [fields](#org.apache.kafka.connect.transforms.MaskField_fields)
     
     Names of fields to mask.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | list |
+    | Default: |     |
+    | Valid Values: | non-empty list |
+    | Importance: | high |
     
-    list
-    
-    Default:
-    
-    Valid Values:
-    
-    non-empty list
-    
-    Importance:
-    
-    high
-    
-*   ###### [replacement](#org.apache.kafka.connect.transforms.MaskField_replacement)
+* ###### [replacement](#org.apache.kafka.connect.transforms.MaskField_replacement)
     
     Custom value replacement, that will be applied to all 'fields' values (numeric or non-empty string values only).
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    null
-    
-    Valid Values:
-    
-    non-empty string
-    
-    Importance:
-    
-    low
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | null |
+    | Valid Values: | non-empty string |
+    | Importance: | low |
     
 
 ##### [org.apache.kafka.connect.transforms.ValueToKey](#org.apache.kafka.connect.transforms.ValueToKey)
 
 Replace the record key with a new key formed from a subset of fields in the record value.
 
-*   ###### [fields](#org.apache.kafka.connect.transforms.ValueToKey_fields)
+* ###### [fields](#org.apache.kafka.connect.transforms.ValueToKey_fields)
     
     Field names on the record value to extract as the record key.
     
-    Type:
-    
-    list
-    
-    Default:
-    
-    Valid Values:
-    
-    non-empty list
-    
-    Importance:
-    
-    high
+    |     |     |
+    | --- | --- |
+    | Type: | list |
+    | Default: |     |
+    | Valid Values: | non-empty list |
+    | Importance: | high |
     
 
 ##### [org.apache.kafka.connect.transforms.HoistField](#org.apache.kafka.connect.transforms.HoistField)
@@ -439,21 +337,16 @@ Wrap data using the specified field name in a Struct when schema present, or a M
 
 Use the concrete transformation type designed for the record key (`org.apache.kafka.connect.transforms.HoistField$Key`) or value (`org.apache.kafka.connect.transforms.HoistField$Value`).
 
-*   ###### [field](#org.apache.kafka.connect.transforms.HoistField_field)
+* ###### [field](#org.apache.kafka.connect.transforms.HoistField_field)
     
     Field name for the single field that will be created in the resulting Struct or Map.
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: |     |
+    | Valid Values: |     |
+    | Importance: | medium |
     
 
 ##### [org.apache.kafka.connect.transforms.ExtractField](#org.apache.kafka.connect.transforms.ExtractField)
@@ -462,62 +355,43 @@ Extract the specified field from a Struct when schema present, or a Map in the c
 
 Use the concrete transformation type designed for the record key (`org.apache.kafka.connect.transforms.ExtractField$Key`) or value (`org.apache.kafka.connect.transforms.ExtractField$Value`).
 
-*   ###### [field](#org.apache.kafka.connect.transforms.ExtractField_field)
+* ###### [field](#org.apache.kafka.connect.transforms.ExtractField_field)
     
     Field name to extract.
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: |     |
+    | Valid Values: |     |
+    | Importance: | medium |
     
 
 ##### [org.apache.kafka.connect.transforms.SetSchemaMetadata](#org.apache.kafka.connect.transforms.SetSchemaMetadata)
 
 Set the schema name, version or both on the record's key (`org.apache.kafka.connect.transforms.SetSchemaMetadata$Key`) or value (`org.apache.kafka.connect.transforms.SetSchemaMetadata$Value`) schema.
 
-*   ###### [schema.name](#org.apache.kafka.connect.transforms.SetSchemaMetadata_schema.name)
+* ###### [schema.name](#org.apache.kafka.connect.transforms.SetSchemaMetadata_schema.name)
     
     Schema name to set.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | null |
+    | Valid Values: |     |
+    | Importance: | high |
     
-    string
-    
-    Default:
-    
-    null
-    
-    Valid Values:
-    
-    Importance:
-    
-    high
-    
-*   ###### [schema.version](#org.apache.kafka.connect.transforms.SetSchemaMetadata_schema.version)
+* ###### [schema.version](#org.apache.kafka.connect.transforms.SetSchemaMetadata_schema.version)
     
     Schema version to set.
     
-    Type:
-    
-    int
-    
-    Default:
-    
-    null
-    
-    Valid Values:
-    
-    Importance:
-    
-    high
+    |     |     |
+    | --- | --- |
+    | Type: | int |
+    | Default: | null |
+    | Valid Values: |     |
+    | Importance: | high |
     
 
 ##### [org.apache.kafka.connect.transforms.TimestampRouter](#org.apache.kafka.connect.transforms.TimestampRouter)
@@ -526,41 +400,27 @@ Update the record's topic field as a function of the original topic value and th
 
 This is mainly useful for sink connectors, since the topic field is often used to determine the equivalent entity name in the destination system(e.g. database table or search index name).
 
-*   ###### [timestamp.format](#org.apache.kafka.connect.transforms.TimestampRouter_timestamp.format)
+* ###### [timestamp.format](#org.apache.kafka.connect.transforms.TimestampRouter_timestamp.format)
     
     Format string for the timestamp that is compatible with `java.text.SimpleDateFormat`.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | yyyyMMdd |
+    | Valid Values: |     |
+    | Importance: | high |
     
-    string
-    
-    Default:
-    
-    yyyyMMdd
-    
-    Valid Values:
-    
-    Importance:
-    
-    high
-    
-*   ###### [topic.format](#org.apache.kafka.connect.transforms.TimestampRouter_topic.format)
+* ###### [topic.format](#org.apache.kafka.connect.transforms.TimestampRouter_topic.format)
     
     Format string which can contain `${topic}` and `${timestamp}` as placeholders for the topic and timestamp, respectively.
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    ${topic}-${timestamp}
-    
-    Valid Values:
-    
-    Importance:
-    
-    high
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | ${topic}-${timestamp} |
+    | Valid Values: |     |
+    | Importance: | high |
     
 
 ##### [org.apache.kafka.connect.transforms.RegexRouter](#org.apache.kafka.connect.transforms.RegexRouter)
@@ -569,39 +429,27 @@ Update the record topic using the configured regular expression and replacement 
 
 Under the hood, the regex is compiled to a `java.util.regex.Pattern`. If the pattern matches the input topic, `java.util.regex.Matcher#replaceFirst()` is used with the replacement string to obtain the new topic.
 
-*   ###### [regex](#org.apache.kafka.connect.transforms.RegexRouter_regex)
+* ###### [regex](#org.apache.kafka.connect.transforms.RegexRouter_regex)
     
     Regular expression to use for matching.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: |     |
+    | Valid Values: | valid regex |
+    | Importance: | high |
     
-    string
-    
-    Default:
-    
-    Valid Values:
-    
-    valid regex
-    
-    Importance:
-    
-    high
-    
-*   ###### [replacement](#org.apache.kafka.connect.transforms.RegexRouter_replacement)
+* ###### [replacement](#org.apache.kafka.connect.transforms.RegexRouter_replacement)
     
     Replacement string.
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    Valid Values:
-    
-    Importance:
-    
-    high
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: |     |
+    | Valid Values: |     |
+    | Importance: | high |
     
 
 ##### [org.apache.kafka.connect.transforms.Flatten](#org.apache.kafka.connect.transforms.Flatten)
@@ -610,23 +458,16 @@ Flatten a nested data structure, generating names for each field by concatenatin
 
 Use the concrete transformation type designed for the record key (`org.apache.kafka.connect.transforms.Flatten$Key`) or value (`org.apache.kafka.connect.transforms.Flatten$Value`).
 
-*   ###### [delimiter](#org.apache.kafka.connect.transforms.Flatten_delimiter)
+* ###### [delimiter](#org.apache.kafka.connect.transforms.Flatten_delimiter)
     
     Delimiter to insert between field names from the input record when generating field names for the output record
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    .
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | .   |
+    | Valid Values: |     |
+    | Importance: | medium |
     
 
 ##### [org.apache.kafka.connect.transforms.Cast](#org.apache.kafka.connect.transforms.Cast)
@@ -635,23 +476,16 @@ Cast fields or the entire key or value to a specific type, e.g. to force an inte
 
 Use the concrete transformation type designed for the record key (`org.apache.kafka.connect.transforms.Cast$Key`) or value (`org.apache.kafka.connect.transforms.Cast$Value`).
 
-*   ###### [spec](#org.apache.kafka.connect.transforms.Cast_spec)
+* ###### [spec](#org.apache.kafka.connect.transforms.Cast_spec)
     
     List of fields and the type to cast them to of the form field1:type,field2:type to cast fields of Maps or Structs. A single type to cast the entire value. Valid types are int8, int16, int32, int64, float32, float64, boolean, and string. Note that binary fields can only be cast to string.
     
-    Type:
-    
-    list
-    
-    Default:
-    
-    Valid Values:
-    
-    list of colon-delimited pairs, e.g. `foo:bar,abc:xyz`
-    
-    Importance:
-    
-    high
+    |     |     |
+    | --- | --- |
+    | Type: | list |
+    | Default: |     |
+    | Valid Values: | list of colon-delimited pairs, e.g. `foo:bar,abc:xyz` |
+    | Importance: | high |
     
 
 ##### [org.apache.kafka.connect.transforms.TimestampConverter](#org.apache.kafka.connect.transforms.TimestampConverter)
@@ -660,79 +494,49 @@ Convert timestamps between different formats such as Unix epoch, strings, and Co
 
 Use the concrete transformation type designed for the record key (`org.apache.kafka.connect.transforms.TimestampConverter$Key`) or value (`org.apache.kafka.connect.transforms.TimestampConverter$Value`).
 
-*   ###### [target.type](#org.apache.kafka.connect.transforms.TimestampConverter_target.type)
+* ###### [target.type](#org.apache.kafka.connect.transforms.TimestampConverter_target.type)
     
     The desired timestamp representation: string, unix, Date, Time, or Timestamp
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: |     |
+    | Valid Values: | \[string, unix, Date, Time, Timestamp\] |
+    | Importance: | high |
     
-    string
-    
-    Default:
-    
-    Valid Values:
-    
-    \[string, unix, Date, Time, Timestamp\]
-    
-    Importance:
-    
-    high
-    
-*   ###### [field](#org.apache.kafka.connect.transforms.TimestampConverter_field)
+* ###### [field](#org.apache.kafka.connect.transforms.TimestampConverter_field)
     
     The field containing the timestamp, or empty if the entire value is a timestamp
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | ""  |
+    | Valid Values: |     |
+    | Importance: | high |
     
-    string
-    
-    Default:
-    
-    ""
-    
-    Valid Values:
-    
-    Importance:
-    
-    high
-    
-*   ###### [format](#org.apache.kafka.connect.transforms.TimestampConverter_format)
+* ###### [format](#org.apache.kafka.connect.transforms.TimestampConverter_format)
     
     A SimpleDateFormat-compatible format for the timestamp. Used to generate the output when type=string or used to parse the input if the input is a string.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | ""  |
+    | Valid Values: |     |
+    | Importance: | medium |
     
-    string
-    
-    Default:
-    
-    ""
-    
-    Valid Values:
-    
-    Importance:
-    
-    medium
-    
-*   ###### [unix.precision](#org.apache.kafka.connect.transforms.TimestampConverter_unix.precision)
+* ###### [unix.precision](#org.apache.kafka.connect.transforms.TimestampConverter_unix.precision)
     
     The desired Unix precision for the timestamp: seconds, milliseconds, microseconds, or nanoseconds. Used to generate the output when type=unix or used to parse the input if the input is a Long.Note: This SMT will cause precision loss during conversions from, and to, values with sub-millisecond components.
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    milliseconds
-    
-    Valid Values:
-    
-    \[nanoseconds, microseconds, milliseconds, seconds\]
-    
-    Importance:
-    
-    low
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: | milliseconds |
+    | Valid Values: | \[nanoseconds, microseconds, milliseconds, seconds\] |
+    | Importance: | low |
     
 
 ##### [org.apache.kafka.connect.transforms.Filter](#org.apache.kafka.connect.transforms.Filter)
@@ -743,123 +547,81 @@ Drops all records, filtering them from subsequent transformations in the chain. 
 
 Add a header to each record.
 
-*   ###### [header](#org.apache.kafka.connect.transforms.InsertHeader_header)
+* ###### [header](#org.apache.kafka.connect.transforms.InsertHeader_header)
     
     The name of the header.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: |     |
+    | Valid Values: | non-null string |
+    | Importance: | high |
     
-    string
-    
-    Default:
-    
-    Valid Values:
-    
-    non-null string
-    
-    Importance:
-    
-    high
-    
-*   ###### [value.literal](#org.apache.kafka.connect.transforms.InsertHeader_value.literal)
+* ###### [value.literal](#org.apache.kafka.connect.transforms.InsertHeader_value.literal)
     
     The literal value that is to be set as the header value on all records.
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    Valid Values:
-    
-    non-null string
-    
-    Importance:
-    
-    high
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: |     |
+    | Valid Values: | non-null string |
+    | Importance: | high |
     
 
 ##### [org.apache.kafka.connect.transforms.DropHeaders](#org.apache.kafka.connect.transforms.DropHeaders)
 
 Removes one or more headers from each record.
 
-*   ###### [headers](#org.apache.kafka.connect.transforms.DropHeaders_headers)
+* ###### [headers](#org.apache.kafka.connect.transforms.DropHeaders_headers)
     
     The name of the headers to be removed.
     
-    Type:
-    
-    list
-    
-    Default:
-    
-    Valid Values:
-    
-    non-empty list
-    
-    Importance:
-    
-    high
+    |     |     |
+    | --- | --- |
+    | Type: | list |
+    | Default: |     |
+    | Valid Values: | non-empty list |
+    | Importance: | high |
     
 
 ##### [org.apache.kafka.connect.transforms.HeaderFrom](#org.apache.kafka.connect.transforms.HeaderFrom)
 
 Moves or copies fields in the key/value of a record into that record's headers. Corresponding elements of `fields` and `headers` together identify a field and the header it should be moved or copied to. Use the concrete transformation type designed for the record key (`org.apache.kafka.connect.transforms.HeaderFrom$Key`) or value (`org.apache.kafka.connect.transforms.HeaderFrom$Value`).
 
-*   ###### [fields](#org.apache.kafka.connect.transforms.HeaderFrom_fields)
+* ###### [fields](#org.apache.kafka.connect.transforms.HeaderFrom_fields)
     
     Field names in the record whose values are to be copied or moved to headers.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | list |
+    | Default: |     |
+    | Valid Values: | non-empty list |
+    | Importance: | high |
     
-    list
-    
-    Default:
-    
-    Valid Values:
-    
-    non-empty list
-    
-    Importance:
-    
-    high
-    
-*   ###### [headers](#org.apache.kafka.connect.transforms.HeaderFrom_headers)
+* ###### [headers](#org.apache.kafka.connect.transforms.HeaderFrom_headers)
     
     Header names, in the same order as the field names listed in the fields configuration property.
     
-    Type:
+    |     |     |
+    | --- | --- |
+    | Type: | list |
+    | Default: |     |
+    | Valid Values: | non-empty list |
+    | Importance: | high |
     
-    list
-    
-    Default:
-    
-    Valid Values:
-    
-    non-empty list
-    
-    Importance:
-    
-    high
-    
-*   ###### [operation](#org.apache.kafka.connect.transforms.HeaderFrom_operation)
+* ###### [operation](#org.apache.kafka.connect.transforms.HeaderFrom_operation)
     
     Either `move` if the fields are to be moved to the headers (removed from the key/value), or `copy` if the fields are to be copied to the headers (retained in the key/value).
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    Valid Values:
-    
-    \[move, copy\]
-    
-    Importance:
-    
-    high
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: |     |
+    | Valid Values: | \[move, copy\] |
+    | Importance: | high |
     
 
 ##### [Predicates](#connect_predicates)
@@ -868,16 +630,16 @@ Transformations can be configured with predicates so that the transformation is 
 
 Predicates are specified in the connector configuration.
 
-*   `predicates` - Set of aliases for the predicates to be applied to some of the transformations.
-*   `predicates.$alias.type` - Fully qualified class name for the predicate.
-*   `predicates.$alias.$predicateSpecificConfig` - Configuration properties for the predicate.
+* `predicates` \- Set of aliases for the predicates to be applied to some of the transformations.
+* `predicates.$alias.type` \- Fully qualified class name for the predicate.
+* `predicates.$alias.$predicateSpecificConfig` \- Configuration properties for the predicate.
 
 All transformations have the implicit config properties `predicate` and `negate`. A predicular predicate is associated with a transformation by setting the transformation's `predicate` config to the predicate's alias. The predicate's value can be reversed using the `negate` configuration property.
 
 For example, suppose you have a source connector which produces messages to many different topics and you want to:
 
-*   filter out the messages in the 'foo' topic entirely
-*   apply the ExtractField transformation with the field name 'other\_field' to records in all topics _except_ the topic 'bar'
+* filter out the messages in the 'foo' topic entirely
+* apply the ExtractField transformation with the field name 'other_field' to records in all topics _except_ the topic 'bar'
 
 To do this we need first to filter out the records destined for the topic 'foo'. The Filter transformation removes records from further processing, and can use the TopicNameMatches predicate to apply the transformation only to records in topics which match a certain regular expression. TopicNameMatches's only configuration property is `pattern` which is a Java regular expression for matching against the topic name. The configuration would look like this:
 
@@ -896,7 +658,7 @@ transforms.Filter.type=org.apache.kafka.connect.transforms.Filter
 transforms.Filter.predicate=IsFoo
 
 transforms.Extract.type=org.apache.kafka.connect.transforms.ExtractField$Key
-transforms.Extract.field=other\_field
+transforms.Extract.field=other_field
 transforms.Extract.predicate=IsBar
 transforms.Extract.negate=true
 
@@ -909,9 +671,9 @@ predicates.IsBar.pattern=bar
 
 Kafka Connect includes the following predicates:
 
-*   `TopicNameMatches` - matches records in a topic with a name matching a particular Java regular expression.
-*   `HasHeaderKey` - matches records which have a header with the given key.
-*   `RecordIsTombstone` - matches tombstone records, that is records with a null value.
+* `TopicNameMatches` \- matches records in a topic with a name matching a particular Java regular expression.
+* `HasHeaderKey` \- matches records which have a header with the given key.
+* `RecordIsTombstone` \- matches tombstone records, that is records with a null value.
 
 Details on how to configure each predicate are listed below:
 
@@ -919,23 +681,16 @@ Details on how to configure each predicate are listed below:
 
 A predicate which is true for records with at least one header with the configured name.
 
-*   ###### [name](#org.apache.kafka.connect.transforms.predicates.HasHeaderKey_name)
+* ###### [name](#org.apache.kafka.connect.transforms.predicates.HasHeaderKey_name)
     
     The header name.
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    Valid Values:
-    
-    non-empty string
-    
-    Importance:
-    
-    medium
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: |     |
+    | Valid Values: | non-empty string |
+    | Importance: | medium |
     
 
 ##### [org.apache.kafka.connect.transforms.predicates.RecordIsTombstone](#org.apache.kafka.connect.transforms.predicates.RecordIsTombstone)
@@ -946,23 +701,16 @@ A predicate which is true for records which are tombstones (i.e. have null value
 
 A predicate which is true for records with a topic name that matches the configured regular expression.
 
-*   ###### [pattern](#org.apache.kafka.connect.transforms.predicates.TopicNameMatches_pattern)
+* ###### [pattern](#org.apache.kafka.connect.transforms.predicates.TopicNameMatches_pattern)
     
     A Java regular expression for matching against the name of a record's topic.
     
-    Type:
-    
-    string
-    
-    Default:
-    
-    Valid Values:
-    
-    non-empty string, valid regex
-    
-    Importance:
-    
-    medium
+    |     |     |
+    | --- | --- |
+    | Type: | string |
+    | Default: |     |
+    | Valid Values: | non-empty string, valid regex |
+    | Importance: | medium |
     
 
 #### [REST API](#connect_rest)
@@ -973,53 +721,53 @@ listeners=http://localhost:8080,https://localhost:8443
 
 By default, if no `listeners` are specified, the REST server runs on port 8083 using the HTTP protocol. When using HTTPS, the configuration has to include the SSL configuration. By default, it will use the `ssl.*` settings. In case it is needed to use different configuration for the REST API than for connecting to Kafka brokers, the fields can be prefixed with `listeners.https`. When using the prefix, only the prefixed options will be used and the `ssl.*` options without the prefix will be ignored. Following fields can be used to configure HTTPS for the REST API:
 
-*   `ssl.keystore.location`
-*   `ssl.keystore.password`
-*   `ssl.keystore.type`
-*   `ssl.key.password`
-*   `ssl.truststore.location`
-*   `ssl.truststore.password`
-*   `ssl.truststore.type`
-*   `ssl.enabled.protocols`
-*   `ssl.provider`
-*   `ssl.protocol`
-*   `ssl.cipher.suites`
-*   `ssl.keymanager.algorithm`
-*   `ssl.secure.random.implementation`
-*   `ssl.trustmanager.algorithm`
-*   `ssl.endpoint.identification.algorithm`
-*   `ssl.client.auth`
+* `ssl.keystore.location`
+* `ssl.keystore.password`
+* `ssl.keystore.type`
+* `ssl.key.password`
+* `ssl.truststore.location`
+* `ssl.truststore.password`
+* `ssl.truststore.type`
+* `ssl.enabled.protocols`
+* `ssl.provider`
+* `ssl.protocol`
+* `ssl.cipher.suites`
+* `ssl.keymanager.algorithm`
+* `ssl.secure.random.implementation`
+* `ssl.trustmanager.algorithm`
+* `ssl.endpoint.identification.algorithm`
+* `ssl.client.auth`
 
 The REST API is used not only by users to monitor / manage Kafka Connect. It is also used for the Kafka Connect cross-cluster communication. Requests received on the follower nodes REST API will be forwarded to the leader node REST API. In case the URI under which is given host reachable is different from the URI which it listens on, the configuration options `rest.advertised.host.name`, `rest.advertised.port` and `rest.advertised.listener` can be used to change the URI which will be used by the follower nodes to connect with the leader. When using both HTTP and HTTPS listeners, the `rest.advertised.listener` option can be also used to define which listener will be used for the cross-cluster communication. When using HTTPS for communication between nodes, the same `ssl.*` or `listeners.https` options will be used to configure the HTTPS client.
 
 The following are the currently supported REST API endpoints:
 
-*   `GET /connectors` - return a list of active connectors
-*   `POST /connectors` - create a new connector; the request body should be a JSON object containing a string `name` field and an object `config` field with the connector configuration parameters
-*   `GET /connectors/{name}` - get information about a specific connector
-*   `GET /connectors/{name}/config` - get the configuration parameters for a specific connector
-*   `PUT /connectors/{name}/config` - update the configuration parameters for a specific connector
-*   `GET /connectors/{name}/status` - get current status of the connector, including if it is running, failed, paused, etc., which worker it is assigned to, error information if it has failed, and the state of all its tasks
-*   `GET /connectors/{name}/tasks` - get a list of tasks currently running for a connector
-*   `GET /connectors/{name}/tasks/{taskid}/status` - get current status of the task, including if it is running, failed, paused, etc., which worker it is assigned to, and error information if it has failed
-*   `PUT /connectors/{name}/pause` - pause the connector and its tasks, which stops message processing until the connector is resumed
-*   `PUT /connectors/{name}/resume` - resume a paused connector (or do nothing if the connector is not paused)
-*   `POST /connectors/{name}/restart?includeTasks=<true|false>&onlyFailed=<true|false>` - restart a connector and its tasks instances.
-    *   the "includeTasks" parameter specifies whether to restart the connector instance and task instances ("includeTasks=true") or just the connector instance ("includeTasks=false"), with the default ("false") preserving the same behavior as earlier versions.
-    *   the "onlyFailed" parameter specifies whether to restart just the instances with a FAILED status ("onlyFailed=true") or all instances ("onlyFailed=false"), with the default ("false") preserving the same behavior as earlier versions.
-*   `POST /connectors/{name}/tasks/{taskId}/restart` - restart an individual task (typically because it has failed)
-*   `DELETE /connectors/{name}` - delete a connector, halting all tasks and deleting its configuration
-*   `GET /connectors/{name}/topics` - get the set of topics that a specific connector is using since the connector was created or since a request to reset its set of active topics was issued
-*   `PUT /connectors/{name}/topics/reset` - send a request to empty the set of active topics of a connector
+* `GET /connectors` \- return a list of active connectors
+* `POST /connectors` \- create a new connector; the request body should be a JSON object containing a string `name` field and an object `config` field with the connector configuration parameters
+* `GET /connectors/{name}` \- get information about a specific connector
+* `GET /connectors/{name}/config` \- get the configuration parameters for a specific connector
+* `PUT /connectors/{name}/config` \- update the configuration parameters for a specific connector
+* `GET /connectors/{name}/status` \- get current status of the connector, including if it is running, failed, paused, etc., which worker it is assigned to, error information if it has failed, and the state of all its tasks
+* `GET /connectors/{name}/tasks` \- get a list of tasks currently running for a connector
+* `GET /connectors/{name}/tasks/{taskid}/status` \- get current status of the task, including if it is running, failed, paused, etc., which worker it is assigned to, and error information if it has failed
+* `PUT /connectors/{name}/pause` \- pause the connector and its tasks, which stops message processing until the connector is resumed
+* `PUT /connectors/{name}/resume` \- resume a paused connector (or do nothing if the connector is not paused)
+* `POST /connectors/{name}/restart?includeTasks=<true|false>&onlyFailed=<true|false>` \- restart a connector and its tasks instances.
+    * the "includeTasks" parameter specifies whether to restart the connector instance and task instances ("includeTasks=true") or just the connector instance ("includeTasks=false"), with the default ("false") preserving the same behavior as earlier versions.
+    * the "onlyFailed" parameter specifies whether to restart just the instances with a FAILED status ("onlyFailed=true") or all instances ("onlyFailed=false"), with the default ("false") preserving the same behavior as earlier versions.
+* `POST /connectors/{name}/tasks/{taskId}/restart` \- restart an individual task (typically because it has failed)
+* `DELETE /connectors/{name}` \- delete a connector, halting all tasks and deleting its configuration
+* `GET /connectors/{name}/topics` \- get the set of topics that a specific connector is using since the connector was created or since a request to reset its set of active topics was issued
+* `PUT /connectors/{name}/topics/reset` \- send a request to empty the set of active topics of a connector
 
 Kafka Connect also provides a REST API for getting information about connector plugins:
 
-*   `GET /connector-plugins`\- return a list of connector plugins installed in the Kafka Connect cluster. Note that the API only checks for connectors on the worker that handles the request, which means you may see inconsistent results, especially during a rolling upgrade if you add new connector jars
-*   `PUT /connector-plugins/{connector-type}/config/validate` - validate the provided configuration values against the configuration definition. This API performs per config validation, returns suggested values and error messages during validation.
+* `GET /connector-plugins`\- return a list of connector plugins installed in the Kafka Connect cluster. Note that the API only checks for connectors on the worker that handles the request, which means you may see inconsistent results, especially during a rolling upgrade if you add new connector jars
+* `PUT /connector-plugins/{connector-type}/config/validate` \- validate the provided configuration values against the configuration definition. This API performs per config validation, returns suggested values and error messages during validation.
 
 The following is a supported REST request at the top-level (root) endpoint:
 
-*   `GET /`\- return basic information about the Kafka Connect cluster such as the version of the Connect worker that serves the REST request (including git commit ID of the source code) and the Kafka cluster ID that is connected to.
+* `GET /`\- return basic information about the Kafka Connect cluster such as the version of the Connect worker that serves the REST request (including git commit ID of the source code) and the Kafka cluster ID that is connected to.
 
 For the complete specification of the REST API, see the [OpenAPI documentation](/33/generated/connect_rest.yaml)
 
@@ -1036,13 +784,13 @@ By default connectors exhibit "fail fast" behavior immediately upon an error or 
 \# disable retries on failure
 errors.retry.timeout=0
 
-# do not log the error and their contexts
+\# do not log the error and their contexts
 errors.log.enable=false
 
-# do not record errors in a dead letter queue topic
+\# do not record errors in a dead letter queue topic
 errors.deadletterqueue.topic.name=
 
-# Fail on first error
+\# Fail on first error
 errors.tolerance=none
 
 These and other related connector configuration properties can be changed to provide different behavior. For example, the following configuration properties can be added to a connector configuration to setup error handling with multiple retries, logging to the application logs and the `my-connector-errors` Kafka topic, and tolerating all errors by reporting them rather than failing the connector task:
@@ -1051,14 +799,14 @@ These and other related connector configuration properties can be changed to pro
 errors.retry.timeout=600000
 errors.retry.delay.max.ms=30000
 
-# log error context along with application logs, but do not include configs and messages
+\# log error context along with application logs, but do not include configs and messages
 errors.log.enable=true
 errors.log.include.messages=false
 
-# produce error context into the Kafka topic
+\# produce error context into the Kafka topic
 errors.deadletterqueue.topic.name=my-connector-errors
 
-# Tolerate all errors.
+\# Tolerate all errors.
 errors.tolerance=all
 
 ### [8.3 Connector Development Guide](#connect_development)
@@ -1102,17 +850,17 @@ public class FileStreamSourceConnector extends SourceConnector {
 The easiest method to fill in is `taskClass()`, which defines the class that should be instantiated in worker processes to actually read the data:
 
 @Override
-public Class<? extends Task> taskClass() {
+public Class&lt;? extends Task&gt; taskClass() {
     return FileStreamSourceTask.class;
 }
 
 We will define the `FileStreamSourceTask` class below. Next, we add some standard lifecycle methods, `start()` and `stop()`:
 
 @Override
-public void start(Map<String, String> props) {
+public void start(Map&lt;String, String&gt; props) {
     // The complete version includes error handling as well.
-    filename = props.get(FILE\_CONFIG);
-    topic = props.get(TOPIC\_CONFIG);
+    filename = props.get(FILE_CONFIG);
+    topic = props.get(TOPIC_CONFIG);
 }
 
 @Override
@@ -1123,13 +871,13 @@ public void stop() {
 Finally, the real core of the implementation is in `taskConfigs()`. In this case we are only handling a single file, so even though we may be permitted to generate more tasks as per the `maxTasks` argument, we return a list with only one entry:
 
 @Override
-public List<Map<String, String>> taskConfigs(int maxTasks) {
-    ArrayList<Map<String, String>> configs = new ArrayList<>();
+public List&lt;Map<String, String&gt;> taskConfigs(int maxTasks) {
+    ArrayList&lt;Map<String, String&gt;> configs = new ArrayList<>();
     // Only one input stream makes sense.
-    Map<String, String> config = new HashMap<>();
+    Map&lt;String, String&gt; config = new HashMap<>();
     if (filename != null)
-        config.put(FILE\_CONFIG, filename);
-    config.put(TOPIC\_CONFIG, topic);
+        config.put(FILE_CONFIG, filename);
+    config.put(TOPIC_CONFIG, topic);
     configs.add(config);
     return configs;
 }
@@ -1152,10 +900,10 @@ public class FileStreamSourceTask extends SourceTask {
     String topic;
 
     @Override
-    public void start(Map<String, String> props) {
-        filename = props.get(FileStreamSourceConnector.FILE\_CONFIG);
+    public void start(Map&lt;String, String&gt; props) {
+        filename = props.get(FileStreamSourceConnector.FILE_CONFIG);
         stream = openOrThrowError(filename);
-        topic = props.get(FileStreamSourceConnector.TOPIC\_CONFIG);
+        topic = props.get(FileStreamSourceConnector.TOPIC_CONFIG);
     }
 
     @Override
@@ -1168,15 +916,15 @@ These are slightly simplified versions, but show that these methods should be re
 Next, we implement the main functionality of the task, the `poll()` method which gets events from the input system and returns a `List<SourceRecord>`:
 
 @Override
-public List<SourceRecord> poll() throws InterruptedException {
+public List&lt;SourceRecord&gt; poll() throws InterruptedException {
     try {
-        ArrayList<SourceRecord> records = new ArrayList<>();
+        ArrayList&lt;SourceRecord&gt; records = new ArrayList<>();
         while (streamValid(stream) && records.isEmpty()) {
             LineAndOffset line = readToNextLine(stream);
             if (line != null) {
-                Map<String, Object> sourcePartition = Collections.singletonMap("filename", filename);
-                Map<String, Object> sourceOffset = Collections.singletonMap("position", streamOffset);
-                records.add(new SourceRecord(sourcePartition, sourceOffset, topic, Schema.STRING\_SCHEMA, line));
+                Map&lt;String, Object&gt; sourcePartition = Collections.singletonMap("filename", filename);
+                Map&lt;String, Object&gt; sourceOffset = Collections.singletonMap("position", streamOffset);
+                records.add(new SourceRecord(sourcePartition, sourceOffset, topic, Schema.STRING_SCHEMA, line));
             } else {
                 Thread.sleep(1);
             }
@@ -1202,9 +950,9 @@ public abstract class SinkTask implements Task {
         this.context = context;
     }
 
-    public abstract void put(Collection<SinkRecord> records);
+    public abstract void put(Collection&lt;SinkRecord&gt; records);
 
-    public void flush(Map<TopicPartition, OffsetAndMetadata> currentOffsets) {
+    public void flush(Map&lt;TopicPartition, OffsetAndMetadata&gt; currentOffsets) {
     }
 
 The `SinkTask` documentation contains full details, but this interface is nearly as simple as the `SourceTask`. The `put()` method should contain most of the implementation, accepting sets of `SinkRecords`, performing any required translation, and storing them in the destination system. This method does not need to ensure the data has been fully written to the destination system before returning. In fact, in many cases internal buffering will be useful so an entire batch of records can be sent at once, reducing the overhead of inserting events into the downstream data store. The `SinkRecords` contain essentially the same information as `SourceRecords`: Kafka topic, partition, offset, the event key and value, and optional headers.
@@ -1218,7 +966,7 @@ When [error reporting](#connect_errorreporting) is enabled for a connector, the 
 private ErrantRecordReporter reporter;
 
 @Override
-public void start(Map<String, String> props) {
+public void start(Map&lt;String, String&gt; props) {
     ...
     try {
         reporter = context.errantRecordReporter(); // may be null if DLQ not enabled
@@ -1229,7 +977,7 @@ public void start(Map<String, String> props) {
 }
 
 @Override
-public void put(Collection<SinkRecord> records) {
+public void put(Collection&lt;SinkRecord&gt; records) {
     for (SinkRecord record: records) {
         try {
             // attempt to process and send record to data sink
@@ -1253,7 +1001,7 @@ The `SourceTask` implementation included a stream ID (the input filename) and of
 To correctly resume upon startup, the task can use the `SourceContext` passed into its `initialize()` method to access the offset data. In `initialize()`, we would add a bit more code to read the offset (if it exists) and seek to that position:
 
 stream = new FileInputStream(filename);
-Map<String, Object> offset = context.offsetStorageReader().offset(Collections.singletonMap(FILENAME\_FIELD, filename));
+Map&lt;String, Object&gt; offset = context.offsetStorageReader().offset(Collections.singletonMap(FILENAME_FIELD, filename));
 if (offset != null) {
     Long lastRecordedOffset = (Long) offset.get("position");
     if (lastRecordedOffset != null)
@@ -1283,12 +1031,12 @@ Kafka Connect allows you to validate connector configurations before submitting 
 
 The following code in `FileStreamSourceConnector` defines the configuration and exposes it to the framework.
 
-private static final ConfigDef CONFIG\_DEF = new ConfigDef()
-    .define(FILE\_CONFIG, Type.STRING, Importance.HIGH, "Source filename.")
-    .define(TOPIC\_CONFIG, Type.STRING, Importance.HIGH, "The topic to publish data to");
+private static final ConfigDef CONFIG_DEF = new ConfigDef()
+    .define(FILE_CONFIG, Type.STRING, Importance.HIGH, "Source filename.")
+    .define(TOPIC_CONFIG, Type.STRING, Importance.HIGH, "The topic to publish data to");
 
 public ConfigDef config() {
-    return CONFIG\_DEF;
+    return CONFIG_DEF;
 }
 
 `ConfigDef` class is used for specifying the set of expected configurations. For each configuration, you can specify the name, the type, the default value, the documentation, the group information, the order in the group, the width of the configuration value and the name suitable for display in the UI. Plus, you can provide special validation logic used for single configuration validation by overriding the `Validator` class. Moreover, as there may be dependencies between configurations, for example, the valid values and visibility of a configuration may change according to the values of other configurations. To handle this, `ConfigDef` allows you to specify the dependents of a configuration and to provide an implementation of `Recommender` to get valid values and set visibility of a configuration given the current configuration values.
@@ -1304,8 +1052,8 @@ To create more complex data, you'll need to work with the Kafka Connect `data` A
 The API documentation provides a complete reference, but here is a simple example creating a `Schema` and `Struct`:
 
 Schema schema = SchemaBuilder.struct().name(NAME)
-    .field("name", Schema.STRING\_SCHEMA)
-    .field("age", Schema.INT\_SCHEMA)
+    .field("name", Schema.STRING_SCHEMA)
+    .field("age", Schema.INT_SCHEMA)
     .field("admin", SchemaBuilder.bool().defaultValue(false).build())
     .build();
 
@@ -1339,24 +1087,24 @@ You can use the REST API to view the current status of a connector and its tasks
     "name": "file-source",
     "connector": {
         "state": "RUNNING",
-        "worker\_id": "192.168.1.208:8083"
+        "worker_id": "192.168.1.208:8083"
     },
     "tasks": \[
         {
         "id": 0,
         "state": "RUNNING",
-        "worker\_id": "192.168.1.209:8083"
+        "worker_id": "192.168.1.209:8083"
         }
     \]
 }
 
 Connectors and their tasks publish status updates to a shared topic (configured with `status.storage.topic`) which all workers in the cluster monitor. Because the workers consume this topic asynchronously, there is typically a (short) delay before a state change is visible through the status API. The following states are possible for a connector or one of its tasks:
 
-*   **UNASSIGNED:** The connector/task has not yet been assigned to a worker.
-*   **RUNNING:** The connector/task is running.
-*   **PAUSED:** The connector/task has been administratively paused.
-*   **FAILED:** The connector/task has failed (usually by raising an exception, which is reported in the status output).
-*   **RESTARTING:** The connector/task is either actively restarting or is expected to restart soon
+* **UNASSIGNED:** The connector/task has not yet been assigned to a worker.
+* **RUNNING:** The connector/task is running.
+* **PAUSED:** The connector/task has been administratively paused.
+* **FAILED:** The connector/task has failed (usually by raising an exception, which is reported in the status output).
+* **RESTARTING:** The connector/task is either actively restarting or is expected to restart soon
 
 In most cases, connector and task states will match, though they may be different for short periods of time when changes are occurring or if tasks have failed. For example, when a connector is first started, there may be a noticeable delay before the connector and its tasks have all transitioned to the RUNNING state. States will also diverge when tasks fail since Connect does not automatically restart failed tasks. To restart a connector/task manually, you can use the restart APIs listed above. Note that if you try to restart a task while a rebalance is taking place, Connect will return a 409 (Conflict) status code. You can retry after the rebalance completes, but it might not be necessary since rebalances effectively restart all the connectors and tasks in the cluster.
 
