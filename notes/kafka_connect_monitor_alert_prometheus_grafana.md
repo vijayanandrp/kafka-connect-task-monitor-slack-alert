@@ -78,7 +78,7 @@ A Loki-based logging stack consists of 3 components:
 Loki is like Prometheus, but for logs: we prefer a multidimensional label-based approach to indexing, and want a single-binary, easy to operate system with no dependencies.
 Loki differs from Prometheus by focusing on logs instead of metrics, and delivering logs via push, instead of pull.
 
-![image](https://user-images.githubusercontent.com/3804538/211368664-9f2792b6-0111-4a52-88b7-1b9737dee1d9.png)
+![Screenshot 2023-01-09 at 17 21 39](https://user-images.githubusercontent.com/3804538/211368810-1e3c1b64-2bdb-43db-afdb-8d9800c28c2a.png)
 
 # References 
 1. https://www.confluent.io/blog/monitor-kafka-clusters-with-prometheus-grafana-and-confluent/
