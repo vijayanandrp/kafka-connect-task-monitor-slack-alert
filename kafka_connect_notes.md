@@ -106,9 +106,17 @@ Renaming fields
 
 For more complex transformations, including aggregations and joins to other topics or lookups to other systems, a full stream processing layer in ksqlDB or Kafka Streams is recommended.
 
+## How Kafka Connect runs?
+
+### Tasks Are the Unit of Parallelism and Scale
+
+The execution of a connector’s ingest or egress of data can also be parallelized (if the connector supports it). In that case, additional tasks are spawned. This could mean that when ingesting from a database, multiple tables are read at once, or when writing to a target data store, data is read concurrently from multiple partitions of the underlying Kafka topic to increase throughput.
+
+### Connect Worker
+
 Kafka Connect runs under the Java virtual machine (JVM) as a process known as a worker. Each worker can execute multiple connectors. When you look to see if Kafka Connect is running, or want to look at its log file, it's the worker process that you're looking at. Tasks are executed by Kafka Connect workers.
 
-
+### Deployment
 A Kafka Connect worker can be run in one of two deployment modes: standalone or distributed. The way in which you configure and operate Kafka Connect in these two modes is different and each has its pros and cons.
 
 Despite its name, the distributed deployment mode is equally valid for a single worker deployed in a sandbox or development environment. In this mode, Kafka Connect uses Kafka topics to store state pertaining to connector configuration, connector status, and more. The topics are configured to retain this information indefinitely, known as compacted topics. Connector instances are created and managed via the REST API that Kafka Connect offers.
