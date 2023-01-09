@@ -119,8 +119,6 @@ The distributed mode is the recommended best practice for most use cases.
 
 Since all offsets, configs, and status information for the distributed mode cluster is maintained in Kafka topics, this means that you can add additional workers easily, as they can read everything that they need from Kafka. When you add workers from a Kafka Connect cluster, the tasks are rebalanced across the available workers to distribute the workload. If you decide to scale down your cluster (or even if something outside your control happens and a worker crashes), Kafka Connect will rebalance again to ensure that all the connector tasks are still executed.
 
-![image](https://user-images.githubusercontent.com/3804538/211229315-db58d86c-45f0-4e64-96ce-4036d4f2787f.png)
-
 ![image](https://user-images.githubusercontent.com/3804538/211229330-5fd6d9ba-da13-48f8-9fbc-5cef91605424.png)
 
 The minimum number of workers recommended is two so that you have fault tolerance. But of course, you can add additional workers to the cluster as your throughput needs increase. You can opt to have fewer, bigger clusters of workers, or you may choose to deploy a greater number of smaller clusters in order to physically isolate workloads. Both are valid approaches and are usually dictated by organizational structure and responsibility for the respective pipelines implemented in Kafka Connect.
