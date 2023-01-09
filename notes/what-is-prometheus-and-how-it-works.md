@@ -49,5 +49,81 @@ Prometheus is designed for reliability, to be the system you go to during an out
 ## When does it not fit?
 Prometheus values reliability. You can always view what statistics are available about your system, even under failure conditions. If you need 100% accuracy, such as for per-request billing, Prometheus is not a good choice as the collected data will likely not be detailed and complete enough. In such a case you would be best off using some other system to collect and analyze the data for billing, and Prometheus for the rest of your monitoring.
 
+What are the Prometheus Components?
+-----------------------------------
+
+A typical monitoring platform with Prometheus is composed of multiple tools:
+
+*   **Prometheus server:** the main Prometheus server which scrapes and stores time series data
+*   **Client libraries:** client libraries for instrumenting application code
+*   **Push gateway:** a push gateway for supporting short-lived jobs
+*   **Exporters:** special-purpose exporters for services like HAProxy, StatsD, Graphite, etc.
+*   **Alertmanager:** an alertmanager to handle alerts
+
+What is PromQL?
+---------------
+
+Prometheus provides its own query language PromQL (Prometheus Query Language) that lets users select and aggregate data. PromQL is specifically adjusted to work in convention with a Time-Series Database and therefore provides time-related query functionalities. Examples include the rate() function, the instant vector and the range vector which can provide many samples for each queried time series. Prometheus has four clearly defined metric types around which the PromQL components revolve. The four types are
+
+*   Gauge
+*   Counter
+*   Histogram
+*   Summary
+
+Prometheus Client libraries
+---------------------------
+
+Before you can monitor your application services, you need to add instrumentation to their code via one of the Prometheus client libraries. Client libraries lets you define and expose internal metrics via an HTTP endpoint on your application’s instance. Prometheus Client libraries support multiple programming languages
+
+*   Go
+*   Java or Scala
+*   Python
+*   Ruby
+*   Bash
+*   C
+*   C++
+*   Common Lisp
+*   Dart
+*   Elixir
+*   Erlang
+*   Haskell
+*   Lua for Nginx
+*   Lua for Tarantool
+*   .NET / C#
+*   Node.js
+*   Perl
+*   PHP
+*   R
+*   Rust
+
+Prometheus Push gateway
+-----------------------
+
+Occasionally you will need to monitor components which cannot be scraped. The Prometheus Pushgateway allows you to push time series from short-lived service-level batch jobs to an intermediary job which Prometheus can scrape.
+
+The Prometheus Pushgateway exists to allow ephemeral and batch jobs to expose their metrics to Prometheus. Since these kinds of jobs may not exist long enough to be scraped, they can instead push their metrics to a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.
+
+What is Alertmanager?
+---------------------
+
+Configuration for alerts can be specified in Prometheus that specifies a condition that needs to be maintained for a specific duration in order for an alert to trigger. When alerts trigger, they are forwarded to Alertmanager service. Alertmanager can include logic to silence alerts and also to forward them to email, Slack, or notification services such as PagerDuty. Some other messaging systems like Microsoft Teams\[29\] could be configured using the Alertmanager Webhook Receiver as mechanism for external integrations.
+
+How Prometheus Works?
+---------------------
+
+*   Prometheus collects data in the form of time series. The time series are built through a pull model:
+*   The Prometheus server queries(scrape) a list of data sources (sometimes called exporters) at a specific polling frequency
+*   Prometheus data is stored in the form of metrics, with each metric having a name that is used for referencing and querying it
+*   Prometheus stores data locally on disk, which helps for fast data storage and fast querying but ability to store metrics in remote storage.
+*   Each Prometheus server is standalone, not depending on network storage or other remote services.
+
+Prometheus Architecutre
+-----------------------
+
+![image](https://user-images.githubusercontent.com/3804538/211322269-2ddd4ec9-1691-4bcf-a7db-09b2bbbe7649.png)
+
+![image](https://user-images.githubusercontent.com/3804538/211322316-229932b0-3c65-4cd4-bfcf-add13378a2a7.png)
+
+
 # Credits
 1. Official site - [https://prometheus.io/docs/introduction/overview/](https://prometheus.io/docs/introduction/overview/)
