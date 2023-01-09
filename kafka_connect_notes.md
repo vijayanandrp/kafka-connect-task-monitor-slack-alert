@@ -1,5 +1,5 @@
 # About Kafka
-Apache Kafka is a community distributed event streaming platform capable of handling trillions of events a day. Initially conceived as a messaging queue, Kafka is based on an abstraction of a distributed commit log. Since being created and open-sourced by LinkedIn in 2011, Kafka has quickly evolved from messaging queue to a full-fledged event streaming platform. Kafka stores data up to a configurable time interval per data entity of kafka topic.
+Apache Kafka is a community distributed event streaming platform capable of handling trillions of events a day. Initially conceived as a messaging queue, Kafka is based on an abstraction of a distributed commit log. Since being created and open-sourced by LinkedIn in 2011, Kafka has quickly evolved from messaging queue to a full-fledged event streaming platform.  
 
 Core components of Kafka Streaming Ecosystems are 
 1. Kafka Cluster (Distributed)
@@ -31,6 +31,22 @@ The diagram you see here shows a small sample of these sources and sinks (target
 
 ![image](https://user-images.githubusercontent.com/3804538/211218683-3a1fecec-b5a6-43a6-96b5-3a028d7870b5.png)
 
+## How Kafka Connect Works
+![image](https://user-images.githubusercontent.com/3804538/211220663-34f0749d-cd04-441c-b83e-d1eee4145dc1.png)
+
+Kafka Connect runs in its own process, separate from the Kafka brokers. It is distributed, scalable, and fault tolerant, giving you the same features you know and love about Kafka itself.
+
+But the best part of Kafka Connect is that using it requires no programming. It’s completely configuration-based, making it available to a wide range of users—not just developers. In addition to ingest and egress of data, Kafka Connect can also perform lightweight transformations on the data as it passes through.
+
+Anytime you are looking to stream data into Kafka from another system, or stream data from Kafka to elsewhere, Kafka Connect should be the first thing that comes to mind.
+
+Kafka connector polling the database for updates and translating the information into real-time events that it produces to Kafka.
+Kafka sits between the source and target systems means that we’re building a loosely coupled system. In other words, it’s relatively easy for us to change the source or target without impacting the other.
+Kafka stores data up to a configurable time interval per data entity (topic), it’s possible to stream the same original data to multiple downstream targets.
+
+![image](https://user-images.githubusercontent.com/3804538/211223254-e6d433df-23a5-4a65-86b9-9219a6979cac.png)
+
+When running Kafka Connect, instances of connector plugins provide the integration between external data systems and the Kafka Connect framework. These connector plugins are reusable components that define how source connectors ought to capture data from data sources to a Kafka topic and also how sink connectors should copy data from Kafka topics to be recognized by a target system. By taking care of all of this boilerplate logic for you, the plugins allow you to hit the ground running with Kafka Connect and focus on your data.
 
 REST API - [https://docs.confluent.io/platform/current/connect/references/restapi.html#topics](https://docs.confluent.io/platform/current/connect/references/restapi.html#topics)
 
