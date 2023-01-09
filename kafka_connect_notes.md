@@ -55,7 +55,7 @@ Kafka Connect is built around a pluggable architecture of several components, wh
 - Connectors are responsible for the interaction between Kafka Connect and the external technology it’s being integrated with
 - Converters handle the serialization and deserialization of data
 - Transformations can optionally apply one or more transformations to the data passing through the pipeline
-### Connectors
+## Connectors
 ![image](https://user-images.githubusercontent.com/3804538/211228323-f1aa2be7-40d3-4f62-a316-d1d0fd2b75e9.png)
 It’s important to understand that the connector plugins themselves don't read from or write to (consume/produce) Kafka itself. The plugins just provide the interface between Kafka and the external technology. This is a deliberate design.
 
@@ -86,6 +86,25 @@ While Kafka doesn’t care about how you serialize your data (as far as it’s c
 
 As well as managing the straightforward matter of serializing data flowing into Kafka and deserializing it on its way out, converters have a crucial role to play in the persistence of schemas. Almost all data that we deal with has a schema; it’s up to us whether we choose to acknowledge that in our designs or not. You can consider schemas as the API between applications and components of a pipeline. Schemas are the contract between one component in the pipeline and another, describing the shape and form of the data.
 
+When you ingest data from a source such as a database, as well as the rows of data, you have the metadata that describes the fields—the data types, their names, etc. Having this schema metadata is valuable, and you will want to retain it in an efficient manner. A great way to do this is by using a serialization method such as Avro, Protobuf, or JSON Schema. All three of these will serialize the data onto a Kafka topic and then store the schema separately in the Confluent Schema Registry. By storing the schema for data, you can easily utilize it in your consuming applications and pipelines. You can also use it to enforce data hygiene in the pipeline by ensuring that only data that is compatible with the schema is stored on a given topic.
+
+You can opt to use serialization formats that don’t store schemas like JSON, string, and byte array, and in some cases, these are valid. If you use these, just make sure that you are doing so for deliberate reasons and have considered how else you will handle schema information.
+
+## Single-Message-Transforms
+
+The third and final key component in Kafka Connect is the transform piece. Unlike connectors and converters, these are entirely optional. You can use them to modify data from a source connector before it is written to Kafka, and modify data read from Kafka before it’s written to the sink. Transforms operate over individual messages as they move, so they’re known as Single Message Transforms or SMTs.
+
+![image](https://user-images.githubusercontent.com/3804538/211228568-716a9d44-b441-4594-84bb-a6b9f8d92ff5.png)
+
+Common uses for SMTs include:
+
+Dropping fields from data at ingest, such as personally identifiable information (PII) if specified by the system requirements
+Adding metadata information such as lineage to data ingested through Kafka Connect
+Changing field data types
+Modifying the topic name to include a timestamp
+Renaming fields
+
+For more complex transformations, including aggregations and joins to other topics or lookups to other systems, a full stream processing layer in ksqlDB or Kafka Streams is recommended.
 
 REST API - [https://docs.confluent.io/platform/current/connect/references/restapi.html#topics](https://docs.confluent.io/platform/current/connect/references/restapi.html#topics)
 
