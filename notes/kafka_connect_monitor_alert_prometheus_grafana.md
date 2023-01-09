@@ -1,5 +1,20 @@
 
+# Prometheus
 Prometheus is a tool used for aggregating multiple platform metrics while scraping hundreds of endpoints. It is purpose-built for scrape and aggregation use cases. Internally, it contains a time-series data store that allows you to store and retrieve time-sliced data in an optimized fashion. It also uses the OpenMetrics format, a CNCF Sandbox project that recently reached v1.0 and is expected to gain traction, with many tools supporting or planning to support it. (The metric exporters created and leveraged by the Prometheus community already adhere to these standards.) Grafana is an open source charting and dashboarding tool that talks to Prometheus and renders beautiful graphs.
+
+## How does Prometheus work?
+Prometheus is an ecosystem with two major components: the server-side component and the client-side configuration. The server-side component is responsible for storing all the metrics and scraping all clients as well. Prometheus differs from services like Elasticsearch and Splunk, which generally use an intermediate component responsible for scraping data from clients and shipping it to the servers. Because there is no intermediate component scraping Prometheus metrics, all poll-related configurations are present on the server itself.
+
+The process looks like this:
+
+![image](https://user-images.githubusercontent.com/3804538/211356782-cdff05f8-978f-4eeb-9c27-4e8fcb2c44fb.png)
+
+There are two core pieces in this diagram:
+
+1.  **Prometheus server:** This component is responsible for polling all of the processes/clients with their metrics exposed on a specific port. The Prometheus server internally maintains a configuration file that lists all the server IP addresses/hostnames and ports on which Prometheus metrics are exposed. The scrape target configuration is the file that keeps all target mapping within Prometheus. Scrape targets are required when we are deploying everything manually without any automation. Prometheus also supports service discovery modules, which it can leverage to discover any available services that are exposing metrics. This auto-discovery is an amazing tool when used with Kubernetes-based deployments, where Pod names (among other elements) are ephemeral. To keep it simple, [Prometheus service discovery](https://github.com/prometheus/prometheus/tree/main/discovery) won’t be covered in this post.
+2.  **Client processes:** All clients that want to leverage Prometheus will need two configuration pieces. First, they must use the Prometheus client library to expose metrics in a Prometheus compatible format (OpenMetrics). Secondly, they must use a YAML configuration file for extracting JMX metrics. This configuration file is used for converting, renaming, and filtering some of the attributes for consumption. The YAML configuration file is necessary for the JVM client, as the JVM MBeans are exposed, converted, and/or renamed to a specific format for consumption using this configuration file.
+
+https://www.confluent.io/blog/monitor-kafka-clusters-with-prometheus-grafana-and-confluent/
 
 # What is the Prometheus Node Exporter? 
 The Prometheus Node Exporter is an open-source time-series monitoring and alerting system for cloud-native environments, including Kubernetes, hosted by the Cloud Native Computing Foundation (CNCF) on GitHub. It can collect and store node-level metrics as time-series data, recording information with a timestamp. It can also collect and record labels, which are optional key-value pairs. The Prometheus Node Exporter exposes a wide variety of hardware- and kernel-related metrics.
