@@ -2,9 +2,9 @@
 Apache Kafka is a community distributed event streaming platform capable of handling trillions of events a day. Initially conceived as a messaging queue, Kafka is based on an abstraction of a distributed commit log. Since being created and open-sourced by LinkedIn in 2011, Kafka has quickly evolved from messaging queue to a full-fledged event streaming platform.  
 
 Core components of Kafka Streaming Ecosystems are 
-1. Kafka Cluster (Distributed)
+1. Kafka Cluster 
 2. Kafka Connect (Distributed, Scalable and Fault tolerant same as Kafka)
-3. kSQL DB
+3. ksqlDB
 4. Schema Registry 
 
 ![image](https://user-images.githubusercontent.com/3804538/211220554-577a24b7-dd10-45b7-a737-80ed8836b7ad.png)
@@ -47,6 +47,45 @@ Kafka stores data up to a configurable time interval per data entity (topic), it
 ![image](https://user-images.githubusercontent.com/3804538/211223254-e6d433df-23a5-4a65-86b9-9219a6979cac.png)
 
 When running Kafka Connect, instances of connector plugins provide the integration between external data systems and the Kafka Connect framework. These connector plugins are reusable components that define how source connectors ought to capture data from data sources to a Kafka topic and also how sink connectors should copy data from Kafka topics to be recognized by a target system. By taking care of all of this boilerplate logic for you, the plugins allow you to hit the ground running with Kafka Connect and focus on your data.
+
+## inside-kafka-connect
+Kafka Connect is built around a pluggable architecture of several components, which together provide very flexible integration pipelines. To get the most out of Kafka Connect it’s important to understand these components and their roles:
+![image](https://user-images.githubusercontent.com/3804538/211227997-9cea298e-5589-4696-8cc9-97fd1f13ec75.png)
+
+- Connectors are responsible for the interaction between Kafka Connect and the external technology it’s being integrated with
+- Converters handle the serialization and deserialization of data
+- Transformations can optionally apply one or more transformations to the data passing through the pipeline
+### Connectors
+![image](https://user-images.githubusercontent.com/3804538/211228323-f1aa2be7-40d3-4f62-a316-d1d0fd2b75e9.png)
+It’s important to understand that the connector plugins themselves don't read from or write to (consume/produce) Kafka itself. The plugins just provide the interface between Kafka and the external technology. This is a deliberate design.
+
+- Source connectors interface with the source API and extract the payload + schema of the data, and pass this internally as a generic representation of the data.
+- Sink connectors work in reverse—they take a generic representation of the data, and the sink connector plugin writes that to the target system using its API.
+Kafka Connect and its underlying components take care of writing data received from source connectors to Kafka topics as well as reading data from Kafka topics and passing it to sink connectors.
+
+Now, this is all hidden from the user—when you add a new connector instance, that’s all you need to configure and Kafka Connect does the rest to get the data flowing. Converters are the next piece of the puzzle and it is important to understand them to help you avoid common pitfalls with Kafka Connect. 
+- Connectors can be added using REST API, ksqlDB
+
+## Converters Serialize/Deserialize the Data
+![image](https://user-images.githubusercontent.com/3804538/211228357-6572c524-710a-48a7-a09a-3d5b6ad7e1ab.png)
+
+Converters are responsible for the serialization and deserialization of data flowing between Kafka Connect and Kafka itself. You’ll sometimes see similar components referred to as SerDes (“SerializerDeserializer”) in Kafka Streams, or just plain old serializers and deserializers in the Kafka Client libraries.
+
+There are a ton of different converters available, but some common ones include:
+```
+Avro – io.confluent.connect.avro.AvroConverter
+Protobuf – io.confluent.connect.protobuf.ProtobufConverter
+String – org.apache.kafka.connect.storage.StringConverter
+JSON – org.apache.kafka.connect.json.JsonConverter
+JSON Schema – io.confluent.connect.json.JsonSchemaConverter
+ByteArray – org.apache.kafka.connect.converters.ByteArrayConverter
+```
+While Kafka doesn’t care about how you serialize your data (as far as it’s concerned, it’s just a series of bytes), you should care about how you serialize your data! In the same way that you would take a carefully considered approach to how you design your services and model your data, you should also be deliberate in your serialization approach.
+
+![image](https://user-images.githubusercontent.com/3804538/211228416-7cb9ac94-05e7-42b9-969c-953c75039c25.png)
+
+As well as managing the straightforward matter of serializing data flowing into Kafka and deserializing it on its way out, converters have a crucial role to play in the persistence of schemas. Almost all data that we deal with has a schema; it’s up to us whether we choose to acknowledge that in our designs or not. You can consider schemas as the API between applications and components of a pipeline. Schemas are the contract between one component in the pipeline and another, describing the shape and form of the data.
+
 
 REST API - [https://docs.confluent.io/platform/current/connect/references/restapi.html#topics](https://docs.confluent.io/platform/current/connect/references/restapi.html#topics)
 
