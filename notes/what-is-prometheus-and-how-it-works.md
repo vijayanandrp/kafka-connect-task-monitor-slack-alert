@@ -65,8 +65,8 @@ What is PromQL?
 
 Prometheus provides its own query language PromQL (Prometheus Query Language) that lets users select and aggregate data. PromQL is specifically adjusted to work in convention with a Time-Series Database and therefore provides time-related query functionalities. Examples include the rate() function, the instant vector and the range vector which can provide many samples for each queried time series. Prometheus has four clearly defined metric types around which the PromQL components revolve. The four types are
 
-*   Gauge
-*   Counter
+* Counter: represents a metric where value can only increase over time; this value is reset to zero on restart. Such a metric can be used to export a system uptime (time elapsed since the last reboot of that system). 
+* Gauge: represents a metric where value can arbitrarily go up and down over time. It can be used to expose memory and CPU usage over time.
 *   Histogram
 *   Summary
 
@@ -124,6 +124,23 @@ Prometheus Architecutre
 
 ![image](https://user-images.githubusercontent.com/3804538/211322316-229932b0-3c65-4cd4-bfcf-add13378a2a7.png)
 
+### Quick Overview on Prometheus Concepts
+Prometheus is a leading monitoring tool for time series metrics that has been applying original concepts since its introduction in 2012. Specifically, Prometheus’s pull approach of data collection, along with its exporters and flexible visualization help it stand out against other popular monitoring tools like Graphite and InfluxDB.    
+
+### Pull approach of data collection
+The pull approach of data collection consists of having the server component (Prometheus server) periodically retrieve metrics from client components. This pulling is commonly referred to as “scrape” in the Prometheus world. Through scrape, the client components are only responsible for producing metrics and making them available for scraping. 
+
+Tools like Graphique, InfluxDB, and many others, use a push approach where, the client component has to produce metrics and push them to the server component. Therefore, the client determines when to push the data regardless of whether the server needs it or whether it is ready to collect it.  
+
+The Prometheus pull approach is innovative because by requiring the server -- not the client -- to scrape, it collects metrics only when the server is up and running and when the data is ready.  This approach requires that each client component enables a specific capability called Prometheus Exporter. 
+
+### Prometheus exporters
+Exporters are essential pieces within a Prometheus monitoring environment. Each program acting as a Prometheus client holds an exporter at its core. An exporter is comprised of software features that produce metrics data, and an HTTP server that exposes the generated metrics available via a given endpoint. Metrics are exposed according to a specific format that the Prometheus server can read and ingest (scraping). We will discuss how to produce metrics, their format, and how to make them available for scraping later in this article. 
+
+![image](https://user-images.githubusercontent.com/3804538/211327191-93f5f36c-18ed-4afe-b07c-a99ad4e48b4f.png)
+
 
 # Credits
 1. Official site - [https://prometheus.io/docs/introduction/overview/](https://prometheus.io/docs/introduction/overview/)
+2.  https://www.metricfire.com/blog/first-contact-with-prometheus/
+
