@@ -134,3 +134,8 @@ The minimum number of workers recommended is two so that you have fault toleranc
 Credit/Source - [https://developer.confluent.io/learn-kafka/kafka-connect/monitoring-kafka-connect/](https://developer.confluent.io/learn-kafka/kafka-connect/monitoring-kafka-connect/)
 
 ![image](https://user-images.githubusercontent.com/3804538/211577844-62fc7fdc-bb71-471f-afd5-f585f9503a20.png)
+
+![kafka-gcp-Architecture ](https://user-images.githubusercontent.com/3804538/211581478-f4d80516-18b8-4fa5-aa1e-a5b5247d3db0.png)
+
+
+Since all offsets, configs, and status information for the distributed mode cluster is maintained in Kafka topics, this means that you can add additional workers easily, as they can read everything that they need from Kafka. When you add workers from a Kafka Connect cluster, the tasks are rebalanced across the available workers to distribute the workload. If you decide to scale down your cluster (or even if something outside your control happens and a worker crashes), Kafka Connect will rebalance again to ensure that all the connector tasks are still executed.
