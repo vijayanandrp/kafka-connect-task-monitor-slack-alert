@@ -56,6 +56,16 @@ but this has various disadvantages, such as being harder to configure and being 
 
 Grafana open source is open source visualization and analytics software. It allows you to query, visualize, alert on, and explore your metrics, logs, and traces no matter where they are stored. It provides you with tools to turn your time-series database (TSDB) data into insightful graphs and visualizations.
 
+# Promtail
+Promtail is an agent which ships the contents of local logs to a private Grafana Loki instance or Grafana Cloud. It is usually deployed to every machine that has applications needed to be monitored.
+
+It primarily:
+- Discovers targets
+- Attaches labels to log streams
+- Pushes them to the Loki instance.
+
+Currently, Promtail can tail logs from two sources: local log files and the systemd journal (on AMD64 machines only).
+
 # Loki: like Prometheus, but for logs.
 
 Loki is a horizontally-scalable, highly-available, multi-tenant log aggregation system inspired by [Prometheus](https://prometheus.io/).
