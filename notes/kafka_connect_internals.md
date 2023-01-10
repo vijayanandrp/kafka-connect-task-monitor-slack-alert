@@ -132,3 +132,5 @@ Since all offsets, configs, and status information for the distributed mode clus
 The minimum number of workers recommended is two so that you have fault tolerance. But of course, you can add additional workers to the cluster as your throughput needs increase. You can opt to have fewer, bigger clusters of workers, or you may choose to deploy a greater number of smaller clusters in order to physically isolate workloads. Both are valid approaches and are usually dictated by organizational structure and responsibility for the respective pipelines implemented in Kafka Connect.
 
 Credit/Source - [https://developer.confluent.io/learn-kafka/kafka-connect/monitoring-kafka-connect/](https://developer.confluent.io/learn-kafka/kafka-connect/monitoring-kafka-connect/)
+
+![image](https://user-images.githubusercontent.com/3804538/211577844-62fc7fdc-bb71-471f-afd5-f585f9503a20.png)
